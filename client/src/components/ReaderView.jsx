@@ -15,7 +15,7 @@ class ReaderView extends React.Component {
     const { urlSnippet } = this.props;
     return (
       <Box align="center">
-        <iframe src={`https://www.archive.org/stream/${urlSnippet}`} width="75%" height="800" title="testing" />
+        <iframe src={`https://www.archive.org/stream/${urlSnippet}`} width="75%" height="800" title="testing" style={{ boxShadow: '1px 1px 10px grey', borderRadius: '7px' }} />
       </Box>
     );
   }

@@ -109,7 +109,7 @@ router.post('/preferences', (req, res) => {
       // eslint-disable-next-line no-console
       .catch((error) => console.error(error));
   });
-  res.send(201);
+  res.sendStatus(201);
 });
 
 router.post('/interest', (req, res) => {
@@ -118,7 +118,7 @@ router.post('/interest', (req, res) => {
     .then(() => dbHelpers.findBook(isbn))
     .then((bookData) => dbHelpers.updatePreferences(userID, bookData.genre, toRead))
     .then(() => {
-      res.status(200).send('book added to user list');
+      res.sendStatus(201);
     })
     .catch((error) => console.error(error));
 });
@@ -141,6 +141,15 @@ router.post('/booklist', (req, res) => {
       res.send(bookList);
     })
     .catch((error) => console.error(error));
+});
+
+// reset user genre preferences
+router.patch('/reset', (req, res) => {
+  const { id } = req.body
+  dbHelpers.createPreferences(id)
+    .then(() => {
+      res.sendStatus(204);
+    });
 });
 
 module.exports = router;

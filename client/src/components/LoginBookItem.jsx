@@ -20,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  paper2: {
+    // padding: theme.spacing(2),
+    borderRadius: '20px',
+    margin: 'auto',
+    maxWidth: 500,
+  },
   paper: {
     padding: theme.spacing(2),
     // borderRadius: '100px',
@@ -87,19 +93,19 @@ function LoginBookItem(props) {
     }
   };
 
-  // const buyNow = (book) => {
-  //   return book.buyLink ? (
-  //     <Button
-  //       target="_blank"
-  //       href={book.buyLink}
-  //       variant="contained"
-  //       color="secondary"
-  //       size="small"
-  //     >Buy Now
-  //     </Button>
-  //   )
-  //     : null;
-  // };
+  const buyNow = (book) => {
+    return book.buyLink ? (
+      <Button
+        target="_blank"
+        href={book.buyLink}
+        variant="contained"
+        color="secondary"
+        size="small"
+      >Buy Now
+      </Button>
+    )
+      : null;
+  };
 
   const toggleCheckedItem = () => {
     setChecked(!checked);
@@ -129,17 +135,15 @@ function LoginBookItem(props) {
               label="Description"
               labelPlacement="end"
             />
+            {/* {buyNow(book)} */}
             <Box display={checked ? 'block' : 'none'}>
-              <Paper classes={classes.paper} style={{ borderRadius: '20px' }}>
+              <Paper className={classes.paper2}>
                 <Typography variant="body2" style={{ height: 105, overflow: 'auto', boxShadow: '1px 1px 8px grey', padding: '10px', borderRadius: '20px' }}>
                   {book.description}
                 </Typography>
               </Paper>
             </Box>
           </Grid>
-          {/* <Grid item>
-            {buyNow(book)}
-          </Grid> */}
         </Grid>
       </Grid>
       <Grid container spacing={2} />

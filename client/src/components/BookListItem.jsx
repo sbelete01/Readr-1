@@ -91,7 +91,8 @@ function BookListItem(props) {
           target="_blank"
           href={book.buyLink}
           variant="contained"
-          color="secondary"
+          // color="secondary"
+          style={{ color: 'white', backgroundColor: 'blue', boxShadow: '1px 2px 2px #43484d' }}
           size="small"
         >Buy Now
         </Button>

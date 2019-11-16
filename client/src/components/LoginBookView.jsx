@@ -40,7 +40,7 @@ class LoginBookView extends React.Component {
           </div>
         ) : (
           <div>
-            <Typography variant="button">What's trending among users</Typography>
+            <Typography variant="h6" style={{ padding: '7px' }}>Popular on Readr</Typography>
             <Grid container spacing={2}>
               {Object.keys(bookList).map((book, i) => (
                 <Grid key={i} item xs={12} sm={12} md={6}>
