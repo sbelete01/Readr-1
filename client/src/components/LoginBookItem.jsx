@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
+    // borderRadius: '100px',
     margin: 'auto',
     maxWidth: 500,
   },
@@ -122,16 +123,18 @@ function LoginBookItem(props) {
           <Typography variant="body2" color="textSecondary">
             {book.genre}
           </Typography>
-          <Grid item lg={12}>
+          <Grid item lg={12} style={{ paddingBottom: '8px', borderRadius: '20px' }}>
             <FormControlLabel
               control={<Switch checked={checked} onChange={toggleCheckedItem} />}
               label="Description"
               labelPlacement="end"
             />
             <Box display={checked ? 'block' : 'none'}>
-              <Typography variant="body2" style={{ height: 150, overflow: "auto" }}>
-                {book.description}
-              </Typography>
+              <Paper classes={classes.paper} style={{ borderRadius: '20px' }}>
+                <Typography variant="body2" style={{ height: 105, overflow: 'auto', boxShadow: '1px 1px 8px grey', padding: '10px', borderRadius: '20px' }}>
+                  {book.description}
+                </Typography>
+              </Paper>
             </Box>
           </Grid>
           {/* <Grid item>
