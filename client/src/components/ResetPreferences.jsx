@@ -9,7 +9,7 @@ function ResetPreferences({ user }) {
   const handleReset = () => {
     axios.patch('/readr/reset', user)
       .then(() => {
-        history.push('/suggestion');
+        history.push('/preferences');
       });
   };
   return (
