@@ -27,6 +27,7 @@ const db = new Sequelize({
 const User = db.define('user', {
   username: Sequelize.STRING,
   googleId: Sequelize.STRING,
+  isQuizzed: Sequelize.BOOLEAN,
 });
 
 // creating the table for the books api informations
