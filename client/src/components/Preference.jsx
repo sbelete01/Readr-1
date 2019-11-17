@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -9,6 +9,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { Checkbox, Grid } from '@material-ui/core';
+import ResetPreferences from './ResetPreferences.jsx';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,6 +39,7 @@ export default function SelectGenre(props) {
     fantasy: false,
     romance: false,
   });
+  const [quizzed, setQuizzed] = React.useState(false);
 
   const handleChange = (name) => (event) => {
     setState({ ...state, [name]: event.target.checked });
@@ -62,7 +64,7 @@ export default function SelectGenre(props) {
     romance,
   } = state;
 
-  return (
+  const FirstTime = () => (
     <Grid
       container
       className={classes.root}
@@ -123,4 +125,16 @@ export default function SelectGenre(props) {
       </FormControl>
     </Grid>
   );
+
+  // check if user has taken quiz
+  axios.post('/readr/quizzed', { user })
+    .then((quizzed) => {
+      const wasQuizzed = quizzed.data;
+      // if true
+      if (wasQuizzed) {
+        setQuizzed(true);
+      }
+    });
+
+  return <div>{quizzed ? <ResetPreferences user={user} /> : <FirstTime />}</div>;
 }

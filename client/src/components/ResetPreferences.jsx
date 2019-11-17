@@ -14,7 +14,7 @@ function ResetPreferences({ user }) {
   };
   return (
     <Button color="primary" onClick={handleReset}>
-        Reset
+        Reset Preferences
     </Button>
   );
 }

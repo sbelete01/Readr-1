@@ -8,6 +8,7 @@ const {
   getInfo,
 } = require('./suggestion');
 const dbHelpers = require('../sequelize/db-helpers');
+const { User } = require('../sequelize/index');
 
 const authCheck = (req, res, next) => {
   if (!req.user) {
@@ -95,7 +96,13 @@ router.post('/unfollow/:followerID', (req, res) => {
 
 // Endpoint to update user preferences
 router.post('/preferences', (req, res) => {
-  // console.log('req', req.body);
+  // change quizzed to true
+  const { googleId } = req.body.user;
+
+  User.update(
+    { isQuizzed: true },
+    { where: { googleId } },
+  );
 
   const userID = req.body.user.id;
   const genres = Object.keys(req.body).slice(0, Object.keys(req.body).length - 1);
@@ -145,10 +152,35 @@ router.post('/booklist', (req, res) => {
 
 // reset user genre preferences
 router.patch('/reset', (req, res) => {
-  const { id } = req.body
+  const { id, googleId } = req.body
+  // reset isquizzed in db
+  User.update(
+    { isQuizzed: false },
+    { where: { googleId } },
+  );
+
   dbHelpers.createPreferences(id)
     .then(() => {
       res.sendStatus(204);
+    });
+});
+
+// check if user has taken preference quiz
+router.post('/quizzed', (req, res) => {
+  // check if user has been quizzed
+  const { googleId } = req.body.user;
+  User.findOne({
+    where: {
+      googleId,
+    },
+  })
+    .then((user) => {
+      const { isQuizzed } = user;
+      res.send(isQuizzed);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.send(false);
     });
 });
 
