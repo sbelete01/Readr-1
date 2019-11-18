@@ -11,7 +11,8 @@ import axios from 'axios';
 import { Checkbox, Grid } from '@material-ui/core';
 import ResetPreferences from './ResetPreferences.jsx';
 
-const useStyles = makeStyles(theme => ({
+
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
@@ -29,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SelectGenre(props) {
-  let history = useHistory();
+  const history = useHistory();
   const { user } = props;
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -40,7 +41,7 @@ export default function SelectGenre(props) {
   });
   const [quizzed, setQuizzed] = React.useState(false);
 
-  const handleChange = name => event => {
+  const handleChange = (name) => (event) => {
     setState({ ...state, [name]: event.target.checked });
   };
 
