@@ -7,7 +7,7 @@ Find your perfect book match for free with Readr.
 <img src = "https://user-images.githubusercontent.com/51866859/73042069-6c4e3c00-3e25-11ea-956c-1eea4718489c.png" width = "250" style = "padding: 10px">
 
 
-
+Readr develops an algorithm unique to each user. The more you use it, the better your book suggestions get!
 
 #### The tech stack for this app: 
 
@@ -26,8 +26,8 @@ Find your perfect book match for free with Readr.
 * A user logs in with third-party authenication from Google.
 * The first time a user logs in, they will be prompted for their name, DOB and a short questionare. 
 * After completing the questionare, they will see a page with a single book suggestion and short description of the book.
-* The users will see three large button links below the book suggestion
-    - **"Interested", "Not Interested", and "Read Now".**
+* The users will see two large button links below the book suggestion
+    - **"Interested", "Not Interested".**
 * The user can click "Interested", "Not Interested"" in the book suggestion
     - This information is saved in a join table in the database with the userID, the book's ISBN, and a boolean value.
 * #### If the user clicks "Interested":
