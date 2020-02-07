@@ -10,7 +10,6 @@ import BookListView from './BookListView.jsx';
 import ReaderView from './ReaderView.jsx';
 import FollowingView from './FollowingView.jsx';
 import Landing from './Landing.jsx';
-import Preference from './Preference.jsx';
 
 const theme = createMuiTheme({
   palette: {
@@ -30,9 +29,7 @@ class App extends React.Component {
     this.state = {
       isLoggedIn: false,
       user: null,
-      urlSnippet: 'shakespearescom000shak',
     };
-    this.updateUrlSnippet = this.updateUrlSnippet.bind(this);
   }
 
   /* Sends request to server to get a book suggestion from google books API.
@@ -44,7 +41,9 @@ class App extends React.Component {
 
   componentDidMount() {
     axios.get('/auth/user').then((response) => {
+      // console.log(response.data);
       if (response.data.user) {
+        console.log('THERE IS A USER');
         this.setState({
           isLoggedIn: true,
           user: response.data.user,
@@ -58,49 +57,41 @@ class App extends React.Component {
     });
   }
 
-  updateUrlSnippet(urlSnippet) {
-    this.setState({ urlSnippet });
-  }
-
   render() {
-    const {
-      isLoggedIn, user, userBookList, urlSnippet,
-    } = this.state;
+    const { isLoggedIn, user, userBookList } = this.state;
     return (
       <MuiThemeProvider theme={theme}>
         <div className="App">
           {/* this container centers content on the page. Width is inherited by the rest of app. */}
-          <Container component="main" maxWidth="lg">
+          <Container component="main" maxWidth="sm">
+            <br />
+            <Typography variant="h2" align="center"> Readr </Typography>
+            <br />
+            <br />
             <div>
               {isLoggedIn === false ? (<Login />) : null }
             </div>
             {/* conditional rendering of the components based on if the user is logged in */}
             {isLoggedIn ? (
               <div>
-                <NavBar user={user} />
-                <div className="mainViews">
-                  <Switch>
-                    {/* // this is our default route */}
-                    <Route
-                      exact
-                      path="/"
-                      render={(props) => (
-                        <Landing {...props} user={user} />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path="/suggestion"
-                      render={(props) => (
-                        <SuggestionView {...props} user={user} />)}
-                    />
-                    <Route exact path="/following" component={FollowingView} />
-                    {/* HOW TO PASS PROPS IN REACT ROUTE v4. ESLINT DISLIKES IT */}
-                    <Route exact path="/booklist" render={(props) => <BookListView {...props} user={user} updateUrlSnippet={this.updateUrlSnippet} />} />
-                    <Route exact path="/readnow" render={(props) => <ReaderView {...props} urlSnippet={urlSnippet} />} />
-                    <Route exact path="/preferences" component={Preference} />
-                  </Switch>
-                </div>
+                <header>
+                  <NavBar user={user} />
+                </header>
+                <br />
+                <Switch>
+                  {/* // this is our default route */}
+                  <Route exact path="/" component={Landing} />
+                  <Route
+                    exact
+                    path="/suggestion"
+                    render={(props) => (
+                      <SuggestionView {...props} user={user} />)}
+                  />
+                  <Route exact path="/following" component={FollowingView} />
+                  {/* HOW TO PASS PROPS IN REACT ROUTE v4. ESLINT DISLIKES IT */}
+                  <Route exact path="/booklist" render={(props) => <BookListView {...props} user={user} />} />
+                  <Route exact path="/readnow" component={ReaderView} />
+                </Switch>
               </div>
             ) : null }
           </Container>

@@ -29,11 +29,6 @@ app.use(bodyParser.json());
 app.use('/auth', authRoutes);
 app.use('/readr', readrRoutes);
 
-// catch all for refresh issues
-app.get('/*', (req, res) => {
-  res.redirect('/');
-});
-
 app.listen(PORT, () => {
   console.log(`Listening on port :${PORT}!`);
 });

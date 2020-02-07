@@ -1,15 +1,12 @@
 /* This is the book suggestion view where the user sees the single book suggestion.
- * It is dynamic and update each time the user clicks "yes", "no", or "read now".
+ * It is dynaic and update each time the user clicks "yes", "no", or "read now".
  * It renders a large image of the book cover along with description and the three button
  * choices above. The user should not see a book they have already said yes or no to.
  */
 import React from 'react';
 import axios from 'axios';
-import { Grid } from '@material-ui/core';
-import Zoom from '@material-ui/core/Zoom';
-import Slider from './BookTinder.jsx';
-import LoadingSuggestion from './SuggestionView/LoadingSuggestion.jsx';
-import Book from './SuggestionView/Book.jsx';
+import { Typography, CircularProgress } from '@material-ui/core';
+import SuggestionButtons from './SuggestionButtons.jsx';
 
 class SuggestionView extends React.Component {
   constructor(props) {
@@ -29,7 +26,6 @@ class SuggestionView extends React.Component {
     this.postUserInterest = this.postUserInterest.bind(this);
     this.handleYesClick = this.handleYesClick.bind(this);
     this.handleNoClick = this.handleNoClick.bind(this);
-    this.clearBookSuggestion = this.clearBookSuggestion.bind(this);
     // this.handleReadNowClick = this.handleReadNowClick.bind(this);
   }
 
@@ -61,22 +57,12 @@ class SuggestionView extends React.Component {
     });
   }
 
-  // clears bookSuggestion before finding another
-  clearBookSuggestion() {
-    setTimeout(() => {
-      this.setState({
-        bookSuggestion: null,
-      });
-    }, 400);
-  }
-
   /* Adds book to the logged in users "not interested" list by
   * sending a update user interest request to the database.
   * Show the next book suggestion.
   */
   handleNoClick() {
     this.postUserInterest(false);
-    this.clearBookSuggestion();
     this.getBookSuggestion();
   }
 
@@ -86,7 +72,6 @@ class SuggestionView extends React.Component {
   */
   handleYesClick() {
     this.postUserInterest(true);
-    this.clearBookSuggestion();
     this.getBookSuggestion();
   }
 
@@ -98,37 +83,44 @@ class SuggestionView extends React.Component {
 
   render() {
     const { bookSuggestion } = this.state;
-    // check if no book description
-    if (bookSuggestion) {
-      if (!bookSuggestion.description) {
-        bookSuggestion.description = 'No description available';
-      }
-    }
     return (
       <div>
         {/* Spinner until component mounts and sets state */}
         {bookSuggestion === null ? (
-          <LoadingSuggestion />
+          <div
+            style={{
+              position: 'absolute',
+              left: '50%',
+              top: '40%',
+              transform: 'translate(-50%, -40%)',
+            }}
+          >
+            <CircularProgress />
+          </div>
         ) : (
-          <Zoom in>
-            <Grid container align="center">
-              <Grid item xs={12}>
-                <Slider
-                  handleNoClick={this.handleNoClick}
-                  handleYesClick={this.handleYesClick}
-                  book={(
-                    <div>
-                      <Book
-                        bookSuggestion={bookSuggestion}
-                        handleNoClick={this.handleNoClick}
-                        handleYesClick={this.handleYesClick}
-                      />
-                    </div>
-                  )}
-                />
-              </Grid>
-            </Grid>
-          </Zoom>
+          <div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            >
+              <img src={bookSuggestion.coverURL} alt="Smiley face" />
+            </div>
+            <br />
+            <Typography variant="h6">{bookSuggestion.title}</Typography>
+            <Typography variant="subtitle1">{bookSuggestion.author || null} </Typography>
+            <Typography variant="caption">{bookSuggestion.description}</Typography>
+            <br />
+            <br />
+            <div>
+              <SuggestionButtons
+                handleNoClick={this.handleNoClick}
+                handleYesClick={this.handleYesClick}
+                // handleReadNowClick={this.handleReadNowClick}
+              />
+            </div>
+          </div>
         )}
       </div>
     );

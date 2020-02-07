@@ -8,7 +8,6 @@ const {
   getInfo,
 } = require('./suggestion');
 const dbHelpers = require('../sequelize/db-helpers');
-const { User } = require('../sequelize/index');
 
 const authCheck = (req, res, next) => {
   if (!req.user) {
@@ -20,6 +19,7 @@ const authCheck = (req, res, next) => {
 };
 
 router.get('/', authCheck, (req, res) => {
+  // console.log(req.user.id);
   res.send(`you are logged in as: ${req.user.username}`);
 });
 
@@ -37,17 +37,14 @@ router.get('/suggestion', (req, res) => {
     .then((books) => {
       book.title = books.works[0].title;
       book.author = books.works[0].authors[0].name;
-      book.urlSnippet = books.works[0].ia;
-      book.availability = books.works[0].availability.status;
-      book.buyLink = books.works[0].saleInfo;
       return getInfo(book.title, book.author);
     })
     .then((bookInfo) => {
+      // console.log(bookInfo);
       book.isbn = bookInfo.isbn;
       book.description = bookInfo.description;
       book.coverURL = bookInfo.coverURL;
       book.title = bookInfo.title;
-      book.buyLink = bookInfo.buyLink;
       return dbHelpers.insertBook(book);
       // res.send(JSON.stringify(book));
     })
@@ -94,40 +91,15 @@ router.post('/unfollow/:followerID', (req, res) => {
     });
 });
 
-// Endpoint to update user preferences
-router.post('/preferences', (req, res) => {
-  // change quizzed to true
-  const { googleId } = req.body.user;
-
-  User.update(
-    { isQuizzed: true },
-    { where: { googleId } },
-  );
-
-  const userID = req.body.user.id;
-  const genres = Object.keys(req.body).slice(0, Object.keys(req.body).length - 1);
-
-  // const { userID, genre, toRead } = req.body;
-
-  genres.forEach((genre) => {
-    const toRead = req.body[genre];
-
-    dbHelpers.updatePreferences(userID, genre, toRead)
-      // eslint-disable-next-line no-console
-      .catch((error) => console.error(error));
-  });
-  res.sendStatus(201);
-});
-
 router.post('/interest', (req, res) => {
   const { userID, isbn, toRead } = req.body;
   dbHelpers.createUserBook(userID, isbn, toRead)
     .then(() => dbHelpers.findBook(isbn))
     .then((bookData) => dbHelpers.updatePreferences(userID, bookData.genre, toRead))
     .then(() => {
-      res.sendStatus(201);
+      res.status(200).send('book added to user list');
     })
-    .catch((error) => console.error(error));
+    .catch((error) => console.log(error));
 });
 
 router.patch('/interest', (req, res) => {
@@ -138,7 +110,7 @@ router.patch('/interest', (req, res) => {
     .then(() => {
       res.status(200).send('book list updated');
     })
-    .catch((error) => console.error(error));
+    .catch((error) => console.log(error));
 });
 
 router.post('/booklist', (req, res) => {
@@ -147,41 +119,6 @@ router.post('/booklist', (req, res) => {
     .then((bookList) => {
       res.send(bookList);
     })
-    .catch((error) => console.error(error));
+    .catch((error) => console.log(error));
 });
-
-// reset user genre preferences
-router.patch('/reset', (req, res) => {
-  const { id, googleId } = req.body
-  // reset isquizzed in db
-  User.update(
-    { isQuizzed: false },
-    { where: { googleId } },
-  );
-
-  dbHelpers.createPreferences(id)
-    .then(() => {
-      res.sendStatus(204);
-    });
-});
-
-// check if user has taken preference quiz
-router.post('/quizzed', (req, res) => {
-  // check if user has been quizzed
-  const { googleId } = req.body.user;
-  User.findOne({
-    where: {
-      googleId,
-    },
-  })
-    .then((user) => {
-      const { isQuizzed } = user;
-      res.send(isQuizzed);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.send(false);
-    });
-});
-
 module.exports = router;

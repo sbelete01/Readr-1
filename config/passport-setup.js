@@ -47,7 +47,6 @@ passport.use(
           User.create({
             username: profile.displayName,
             googleId: profile.id,
-            isQuizzed: false,
           })
             .then((newUser) => {
               dbHelpers.createPreferences(newUser.dataValues.id);
