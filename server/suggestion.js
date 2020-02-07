@@ -22,12 +22,11 @@ const getInfo = (title, author) => axios.get('https://www.googleapis.com/books/v
 })
   .then((bookData) => {
     const bookInfo = {};
-    bookInfo.isbn = bookData.data.items[0].volumeInfo.industryIdentifiers[0].identifier;
-    bookInfo.description = bookData.data.items[0].volumeInfo.description;
-    bookInfo.coverURL = bookData.data.items[0].volumeInfo.imageLinks.thumbnail;
-    bookInfo.title = bookData.data.items[0].volumeInfo.title;
-    // console.log(bookData.data.docs[0].isbn);
-    // return bookData.data.docs[0].isbn[0];
+    bookInfo.isbn = bookData.data.items[0].volumeInfo.industryIdentifiers[0].identifier || null;
+    bookInfo.description = bookData.data.items[0].volumeInfo.description || null;
+    bookInfo.coverURL = bookData.data.items[0].volumeInfo.imageLinks.thumbnail || null;
+    bookInfo.title = bookData.data.items[0].volumeInfo.title || null;
+    bookInfo.buyLink = bookData.data.items[0].saleInfo.buyLink || null;
     return bookInfo;
   })
   .catch((err) => {

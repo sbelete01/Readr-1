@@ -9,14 +9,39 @@ import {
   Toolbar,
   makeStyles,
   Button,
+  IconButton,
 } from '@material-ui/core';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 import { Link } from 'react-router-dom';
+import WelcomeToast from './SnackBar.jsx';
+import BigBar from './NavBarMenus/BigBar.jsx';
+import SmallBar from './NavBarMenus/SmallBar.jsx';
 
 // This allows custom styling of the buttons, over-riding the root theme
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
     color: 'white',
+  },
+  rightToolbar: {
+    marginLeft: 'auto',
+    marginRight: 0,
+  },
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+    color: 'white',
+    textDecoration: 'none',
+  },
+  bigBar: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
 }));
 
@@ -25,28 +50,32 @@ const NavBar = (props) => {
   const { username, id } = props.user;
   const firstName = username.split(' ')[0];
   return (
-    <div>
-      <Typography variant="button" style={{ flex: 1, float: 'left' }}>
-        Welcome {firstName}!
-      </Typography>
-      <Typography variant="body2" style={{ flex: 1, float: 'right' }}>
-        Your user ID#: {id}
-      </Typography>
-      <AppBar color="primary" position="static">
+    <div className={classes.root}>
+      <WelcomeToast message={`Hi ${username}!`} />
+      <AppBar position="fixed">
         <Toolbar>
-          <Typography>
-            <Button size="large" component={Link} to="/suggestion" className={classes.button}>
-              Explore Books
-            </Button>
-            <Button size="large" component={Link} to="/booklist" className={classes.button}>
-              To-Read
-            </Button>
-            <Button size="large" component={Link} to="/following" className={classes.button}>
-              Following
-            </Button>
-            {/* This directs to passport auth logout */}
-            <Button size="large" href="/auth/logout" className={classes.button}>Logout</Button>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+            component={Link}
+            to="/"
+          >
+            <MenuBookIcon />
+          </IconButton>
+          <Typography
+            variant="h4"
+            className={classes.title}
+            component={Link}
+            to="/suggestion"
+          >
+            Readr 2.0
           </Typography>
+          <div className={classes.bigBar}>
+            <BigBar />
+          </div>
+          <SmallBar />
         </Toolbar>
       </AppBar>
     </div>

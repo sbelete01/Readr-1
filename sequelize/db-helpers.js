@@ -10,6 +10,9 @@ const insertBook = (book) => models.Book.create({
   description: book.description,
   coverURL: book.coverURL,
   genre: book.genre,
+  urlSnippet: book.urlSnippet,
+  availability: book.availability,
+  buyLink: book.buyLink,
 });
 
 // Takes an identifying number and returns the book info
@@ -32,7 +35,7 @@ const createPreferences = (userID) => models.UserPreference.create({
 });
 
 // Takes a userID, the subject of the book, and the toRead boolean and updates the preferences
-const defaultUpdate = 0.2;
+const defaultUpdate = 0.05;
 // Update the user preferences where userID matches and modify subject based on math
 // (toRead is boolean of which list for positive or negative change)
 const updatePreferences = (userID, subject, toRead) => models.UserPreference.findOne({
@@ -43,9 +46,13 @@ const updatePreferences = (userID, subject, toRead) => models.UserPreference.fin
 })
   .then((subjectWeight) => {
     let newWeight;
-    if (toRead) {
-      newWeight = subjectWeight.dataValues[subject] + defaultUpdate;
-    } else if (subjectWeight.dataValues[subject] <= 0.2) {
+    if (toRead === true) {
+      if (subjectWeight.dataValues[subject] < 0.94) {
+        newWeight = subjectWeight.dataValues[subject];
+      } else {
+        newWeight = subjectWeight.dataValues[subject] + defaultUpdate;
+      }
+    } else if (subjectWeight.dataValues[subject] <= 0.06) {
       newWeight = subjectWeight.dataValues[subject];
     } else {
       newWeight = subjectWeight.dataValues[subject] - defaultUpdate;
@@ -163,6 +170,7 @@ const createUser = (username, googleId) => models.User.create({
   username,
   googleId,
 });
+
 
 module.exports.insertBook = insertBook;
 module.exports.findBook = findBook;

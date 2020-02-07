@@ -27,6 +27,7 @@ const db = new Sequelize({
 const User = db.define('user', {
   username: Sequelize.STRING,
   googleId: Sequelize.STRING,
+  isQuizzed: Sequelize.BOOLEAN,
 });
 
 // creating the table for the books api informations
@@ -48,7 +49,13 @@ const Book = db.define('book', {
     type: Sequelize.STRING,
     unique: true,
   },
+  buyLink: {
+    type: Sequelize.STRING,
+    unique: true,
+  },
   genre: Sequelize.STRING,
+  urlSnippet: Sequelize.STRING,
+  availability: Sequelize.STRING,
 });
 
 // creating the field on the table
@@ -86,6 +93,7 @@ const UserPreference = db.define('user_preference', {
   romance: Sequelize.FLOAT,
 });
 
+// { force: true } add into sync if db change is made
 db.sync({ force: true }).then(() => {
   console.log('connected to database');
 }).catch((err) => { console.log(err); });
