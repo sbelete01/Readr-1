@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles({
   card: {
     maxWidth: '100%',
-    height: 520,
+    height: 550,
   },
   media: {
     height: 360,
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Book = props => {
+const Book = (props) => {
   const { title, author, description, coverURL } = props.bookSuggestion;
   const { handleNoClick, handleYesClick } = props;
   const classes = useStyles();
@@ -43,9 +43,9 @@ const Book = props => {
           <CardContent>
             <Typography
               variant="h6"
-              className={classes.title}
+              className="container title"
               style={{
-                overflowX: 'scroll',
+                overflowX: 'hidden',
                 maxHeight: 35,
                 textAlign: 'left',
               }}
@@ -59,16 +59,16 @@ const Book = props => {
               {author}
             </Typography>
             <Typography
-              className={classes.description}
+              className="container description"
               variant="body2"
-              style={{ height: 60, overflow: 'auto', textAlign: 'left' }}
+              style={{ maxHeight: 60, overflow: 'scroll', textAlign: 'left' }}
               color="textSecondary"
             >
               {description}
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
+        <CardActions style={{ display: 'block', paddingBottom: 10 }}>
           <Button size="small" color="secondary" onClick={handleYesClick}>
             Add to favorites
           </Button>
