@@ -38,7 +38,7 @@ router.get('/suggestion', (req, res) => {
       book.title = books.works[0].title;
       book.author = books.works[0].authors[0].name;
       book.urlSnippet = books.works[0].ia;
-      book.availability = books.works[0].availability.status;
+      // book.availability = books.works[0].availability.status;
       book.buyLink = books.works[0].saleInfo;
       return getInfo(book.title, book.author);
     })
