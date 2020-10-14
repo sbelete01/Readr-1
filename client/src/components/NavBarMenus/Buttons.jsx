@@ -46,6 +46,14 @@ const Buttons = () => {
       </Button>
       <Button
         size="large"
+        component={Link}
+        to="/profile"
+        className={classes.button}
+      >
+        Tester
+      </Button>
+      <Button
+        size="large"
         href="/auth/logout"
         className={classes.button}
       >

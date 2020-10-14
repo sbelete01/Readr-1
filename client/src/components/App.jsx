@@ -11,6 +11,7 @@ import ReaderView from './ReaderView.jsx';
 import FollowingView from './FollowingView.jsx';
 import Landing from './Landing.jsx';
 import Preference from './Preference.jsx';
+import ProfileView from './Profile/ProfileView.jsx';
 
 const theme = createMuiTheme({
   palette: {
@@ -99,6 +100,7 @@ class App extends React.Component {
                     <Route exact path="/booklist" render={(props) => <BookListView {...props} user={user} updateUrlSnippet={this.updateUrlSnippet} />} />
                     <Route exact path="/readnow" render={(props) => <ReaderView {...props} urlSnippet={urlSnippet} />} />
                     <Route exact path="/preferences" component={Preference} />
+                    <Route exact path="/profile" component={ProfileView} />
                   </Switch>
                 </div>
               </div>

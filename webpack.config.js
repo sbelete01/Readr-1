@@ -24,6 +24,11 @@ module.exports = {
           'css-loader',
         ],
       },
+      {
+        resolve: {
+          extensions: ['.js', '.jsx'],
+        },
+      },
     ],
   },
 };
