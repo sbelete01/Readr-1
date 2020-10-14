@@ -17,7 +17,8 @@ const ChooseName = ({ user }) => {
         window.alert('Username taken!');
         console.error(error);
       });
-  }
+  };
+
   return (
     <div>
       <input
@@ -32,7 +33,6 @@ const ChooseName = ({ user }) => {
       >
         submit
       </button>
-      <br />
     </div>
   );
 };

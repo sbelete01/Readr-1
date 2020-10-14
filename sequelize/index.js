@@ -61,6 +61,11 @@ const Book = db.define('book', {
 
 // creating the field on the table
 const UserFollower = db.define('user_follower', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
   userID: {
     type: Sequelize.INTEGER,
   },
@@ -68,6 +73,7 @@ const UserFollower = db.define('user_follower', {
     type: Sequelize.INTEGER,
   },
 });
+
 
 const UserBlocked = db.define('user_blocked', {
   userID: Sequelize.INTEGER, // User ID
@@ -102,7 +108,7 @@ UserBook.sync();
 UserPreference.sync();
 
 // for clearing database
-// db.sync({ force: true });
+db.sync({ force: true });
 
 // { force: true } add into sync if db change is made
 db.authenticate().then(() => {

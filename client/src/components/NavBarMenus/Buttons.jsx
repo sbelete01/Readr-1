@@ -47,7 +47,7 @@ const Buttons = () => {
       <Button
         size="large"
         component={Link}
-        to="/profile"
+        to="/addFriend"
         className={classes.button}
       >
         Tester

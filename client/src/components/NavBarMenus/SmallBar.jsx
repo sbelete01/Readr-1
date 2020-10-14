@@ -82,7 +82,7 @@ export default function SmallBar() {
         <MenuItem
           onClick={handleClose}
           component={Link}
-          to="/profile"
+          to="/addFriend"
         >
           Tester
         </MenuItem>
