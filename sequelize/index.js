@@ -121,18 +121,7 @@ const UserPreference = db.define('user_preference', {
   romance: Sequelize.FLOAT,
 });
 
-<<<<<<< HEAD
-User.sync();
-Book.sync();
-UserFollower.sync();
-UserBlocked.sync();
-UserBook.sync();
-UserPreference.sync();
-
-// for clearing database
-=======
 // forces data base drop
->>>>>>> d1ccf05... :(update) data into user view
 // db.sync({ force: true });
 
 // { force: true } add into sync if db change is made
