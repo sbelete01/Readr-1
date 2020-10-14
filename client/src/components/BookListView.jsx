@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* Renders the list of either the "to-Read" or "not-interested" books.
  * Here we map over the users collection retrieved from the database and render a BookListItem.
  * A user can sort their list by date added or genre.
@@ -17,6 +18,7 @@ class BookListView extends React.Component {
     this.getUserBookList = this.getUserBookList.bind(this);
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
     this.handleReadNow = this.handleReadNow.bind(this);
+    this.handleAddToReadList = this.handleAddToReadList.bind(this);
   }
 
   componentDidMount() {
@@ -56,6 +58,24 @@ class BookListView extends React.Component {
     // can pass it to another parent function handler
   }
 
+  handleAddToReadList(isbn, haveRead, title, author, description) {
+    console.log('HAVE CLICKED');
+    const { user } = this.props;
+    axios.post('/readr/haveread', {
+      userID: user.id,
+      isbn,
+      title,
+      author,
+      description,
+      haveRead,
+    })
+      .then((res) => {
+        res.status(201);
+        res.send('THIS POST FOR READ WORKS');
+      })
+      .catch((err) => { console.error(err, 'THIS IS THE ERROR'); });
+  }
+
   render() {
     const { bookList } = this.state;
     return (
@@ -82,6 +102,7 @@ class BookListView extends React.Component {
                     key={book.isbn}
                     handleRemoveClick={this.handleRemoveClick}
                     handleReadNow={this.handleReadNow}
+                    handleAddToReadList={this.handleAddToReadList}
                   />
                 </Grid>
               ))}

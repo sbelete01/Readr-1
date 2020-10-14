@@ -124,11 +124,24 @@ router.post('/preferences', async (req, res) => {
   res.sendStatus(201);
 });
 
+
+// sends have read data to server
+router.post('/haveread', (req, res) => {
+  const {
+    userID, isbn, haveRead, title,
+    author, description, coverURL,
+  } = req.body;
+  console.log(userID, isbn, haveRead, title,
+    author, description, coverURL);
+});
+
 router.post('/interest', (req, res) => {
-  const { userID, isbn, toRead } = req.body;
+  const {
+    userID, isbn, toRead,
+  } = req.body;
   dbHelpers.createUserBook(userID, isbn, toRead)
     .then(() => dbHelpers.findBook(isbn))
-    .then((bookData) => dbHelpers.updatePreferences(userID, bookData.genre, toRead))
+    .then((bookData) => { dbHelpers.updatePreferences(userID, bookData.genre, toRead); console.log(bookData); })
     .then(() => {
       res.sendStatus(201);
     })

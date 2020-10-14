@@ -113,7 +113,7 @@ UserPreference.sync();
 // { force: true } add into sync if db change is made
 db.authenticate().then(() => {
   console.log('connected to database');
-}).catch((err) => { console.log(err); });
+}).catch((err) => console.log(err));
 
 module.exports.User = User;
 module.exports.Book = Book;

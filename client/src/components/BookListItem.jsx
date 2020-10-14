@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* A single book component from the BookListView.
 * Renders a thumbnail image, the title, author, genre, short description, date added.
 * buttons to remove from list, move to another list, and read now
@@ -35,7 +36,9 @@ const useStyles = makeStyles((theme) => ({
 
 function BookListItem(props) {
   const classes = useStyles();
-  const { book, handleRemoveClick, handleReadNow } = props;
+  const {
+    book, handleRemoveClick, handleReadNow, handleAddToReadList,
+  } = props;
   const availabilityCheck = (book) => {
     switch (book.availability) {
       case 'open': return (
@@ -47,7 +50,8 @@ function BookListItem(props) {
               className={classes.button}
               startIcon={<MenuBookOutlinedIcon />}
               onClick={() => handleReadNow(book.urlSnippet)}
-            >Read Now
+            >
+              Read Now
             </Button>
           </Link>
         </Grid>
@@ -84,22 +88,20 @@ function BookListItem(props) {
     }
   };
 
-  const buyNow = (book) => {
-    return book.buyLink ? (
-      <Grid item>
-        <Button
-          target="_blank"
-          href={book.buyLink}
-          variant="contained"
+  const buyNow = (book) => (book.buyLink ? (
+    <Grid item>
+      <Button
+        target="_blank"
+        href={book.buyLink}
+        variant="contained"
           // color="secondary"
-          style={{ color: 'white', backgroundColor: 'blue', boxShadow: '1px 2px 2px #43484d' }}
-          size="small"
-        >Buy Now
-        </Button>
-      </Grid>
-    )
-      : null;
-  };
+        style={{ color: 'white', backgroundColor: 'blue', boxShadow: '1px 2px 2px #43484d' }}
+        size="small"
+      >Buy Now
+      </Button>
+    </Grid>
+  )
+    : null);
 
 
   return (
@@ -133,6 +135,15 @@ function BookListItem(props) {
             onClick={() => handleRemoveClick(book.isbn, false)}
           >
             Delete
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            className={classes.button}
+            onClick={() => handleAddToReadList(book.isbn, book.coverURL, book.title, book.author, book.description, true)}
+          >
+            Read
           </Button>
         </Grid>
       </Grid>
