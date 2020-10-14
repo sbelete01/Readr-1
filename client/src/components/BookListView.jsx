@@ -58,13 +58,14 @@ class BookListView extends React.Component {
     // can pass it to another parent function handler
   }
 
-  handleAddToReadList(isbn, haveRead, title, author, description) {
+  handleAddToReadList(isbn, haveRead, title, author, description, coverURL) {
     console.log('HAVE CLICKED');
     const { user } = this.props;
     axios.post('/readr/haveread', {
       userID: user.id,
       isbn,
       title,
+      coverURL,
       author,
       description,
       haveRead,

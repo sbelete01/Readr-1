@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Grid, Paper, Typography, ButtonBase,
@@ -38,6 +39,8 @@ const InfoCardEntry = () => {
   const [isClicked, setClicked] = useState(false);
   const [buttonView, setButtonView] = useState();
   const [open, setOpen] = React.useState(false);
+
+  const [userID, setUserID] = useState(1);
 
   const handleClickOpen = () => {
     setOpen(true);

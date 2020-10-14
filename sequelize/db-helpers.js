@@ -94,6 +94,16 @@ const userBookList = (userID, toRead) => models.UserBook.findAll({
     },
   }));
 
+const createUserRead = async (userID, isbn, coverURL, title, author, description, haveRead) => await models.UserHaveRead.create({
+  userID,
+  isbn,
+  coverURL,
+  title,
+  author,
+  description,
+  have_read: haveRead,
+});
+
 const createUserBook = (userID, isbn, toRead) => models.UserBook.create({
   userID,
   isbn,
@@ -186,3 +196,4 @@ module.exports.unfollowUser = unfollowUser;
 module.exports.getFollowing = getFollowing;
 module.exports.getFollowers = getFollowers;
 module.exports.createUser = createUser;
+module.exports.createUserRead = createUserRead;

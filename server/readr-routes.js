@@ -8,7 +8,11 @@ const {
   getInfo,
 } = require('./suggestion');
 const dbHelpers = require('../sequelize/db-helpers');
+<<<<<<< HEAD
 const { User, UserFollower } = require('../sequelize/index');
+=======
+const { User, UserHaveRead } = require('../sequelize/index');
+>>>>>>> 5491922... :(update) data into user view
 
 const authCheck = (req, res, next) => {
   if (!req.user) {
@@ -128,11 +132,29 @@ router.post('/preferences', async (req, res) => {
 // sends have read data to server
 router.post('/haveread', (req, res) => {
   const {
-    userID, isbn, haveRead, title,
-    author, description, coverURL,
+    userID,
+    isbn,
+    coverURL,
+    title,
+    author,
+    description,
+    haveRead,
   } = req.body;
-  console.log(userID, isbn, haveRead, title,
-    author, description, coverURL);
+  dbHelpers.createUserRead(userID, isbn, haveRead, title, author, description, coverURL);
+});
+
+router.get('/haveread', async (req, res) => {
+  const { userID } = req.query;
+  await UserHaveRead.findAll({
+    where: {
+      userID,
+    },
+  })
+    .then((data) => {
+      res.send(data);
+      console.log(data.userID, 'USER ID');
+      console.log(data, 'BOOK DATA');
+    });
 });
 
 router.post('/interest', (req, res) => {
@@ -141,7 +163,7 @@ router.post('/interest', (req, res) => {
   } = req.body;
   dbHelpers.createUserBook(userID, isbn, toRead)
     .then(() => dbHelpers.findBook(isbn))
-    .then((bookData) => { dbHelpers.updatePreferences(userID, bookData.genre, toRead); console.log(bookData); })
+    .then((bookData) => { dbHelpers.updatePreferences(userID, bookData.genre, toRead); })
     .then(() => {
       res.sendStatus(201);
     })
