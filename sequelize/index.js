@@ -108,7 +108,7 @@ UserBook.sync();
 UserPreference.sync();
 
 // for clearing database
-db.sync({ force: true });
+// db.sync({ force: true });
 
 // { force: true } add into sync if db change is made
 db.authenticate().then(() => {
