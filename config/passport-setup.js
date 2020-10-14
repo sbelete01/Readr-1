@@ -29,6 +29,7 @@ passport.use(
     clientID: process.env.clientID,
     clientSecret: process.env.clientSecret,
   }, (accessToken, refreshToken, profile, next) => {
+    console.log('checking shit');
     // check if user already exists in DB
     // find user with matching googleId and profile.id
     User.findOne({

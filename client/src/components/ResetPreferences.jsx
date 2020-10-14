@@ -26,7 +26,8 @@ function ResetPreferences({ user }) {
   const handleReset = () => {
     axios.patch('/readr/reset', user)
       .then(() => {
-        history.push('/preferences');
+        // sending the state lets you access it at next stop through history.location.state.user
+        history.push('/preferences', { user });
       });
   };
   return (

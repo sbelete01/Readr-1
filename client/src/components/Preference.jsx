@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -8,7 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { Checkbox, Grid } from '@material-ui/core';
+import { Checkbox, Grid, TextField } from '@material-ui/core';
 import ResetPreferences from './ResetPreferences.jsx';
 
 
@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SelectGenre(props) {
   const history = useHistory();
-  const { user } = props;
+  // if directed from reset preferences, use that user
+  const { user } = history.location.state ? history.location.state : props;
   const classes = useStyles();
   const [state, setState] = React.useState({
     comedy: false,
@@ -40,6 +41,20 @@ export default function SelectGenre(props) {
     romance: false,
   });
   const [quizzed, setQuizzed] = React.useState(false);
+  // let chosenName = middle;
+
+  useEffect(() => {
+  // check if user has taken quiz
+    axios.post('/readr/quizzed', { user })
+      .then((quizzed) => {
+        console.log(quizzed, 'quizzz');
+        const wasQuizzed = quizzed.data;
+        // if true
+        if (wasQuizzed) {
+          setQuizzed(true);
+        }
+      });
+  }, []);
 
   const handleChange = (name) => (event) => {
     setState({ ...state, [name]: event.target.checked });
@@ -57,6 +72,7 @@ export default function SelectGenre(props) {
       });
   };
 
+
   const {
     comedy,
     thriller,
@@ -71,8 +87,9 @@ export default function SelectGenre(props) {
       justify="center"
     >
       <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Pick Interested Genre</FormLabel>
+        <FormLabel component="legend">Sign up for Readr!</FormLabel>
         <FormGroup>
+          Select your favorite Genre
           <FormControlLabel
             control={(
               <Checkbox
@@ -125,16 +142,6 @@ export default function SelectGenre(props) {
       </FormControl>
     </Grid>
   );
-
-  // check if user has taken quiz
-  axios.post('/readr/quizzed', { user })
-    .then((quizzed) => {
-      const wasQuizzed = quizzed.data;
-      // if true
-      if (wasQuizzed) {
-        setQuizzed(true);
-      }
-    });
 
   return <div>{quizzed ? <ResetPreferences user={user} /> : <FirstTime />}</div>;
 }

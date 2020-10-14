@@ -99,12 +99,13 @@ router.post('/unfollow/:followerID', (req, res) => {
 });
 
 // Endpoint to update user preferences
-router.post('/preferences', (req, res) => {
+router.post('/preferences', async (req, res) => {
   // change quizzed to true
+  const { chosenName } = req.body;
   const { googleId } = req.body.user;
 
-  User.update(
-    { isQuizzed: true },
+  await User.update(
+    { isQuizzed: true, chosenName },
     { where: { googleId } },
   );
 
@@ -185,6 +186,39 @@ router.post('/quizzed', (req, res) => {
     .catch((err) => {
       console.error(err);
       res.send(false);
+    });
+});
+
+// save a new users chosen username
+router.post('/saveName', async (req, res) => {
+  const { chosenName } = req.body;
+  const { googleId } = req.body.user;
+  // see if name has been taken
+  await User.findOne({
+    where: { chosenName },
+  })
+    .then(async (response) => {
+      // if name doesnt exist, update current user
+      if (!response) {
+        await User.update({ chosenName }, {
+          where: {
+            googleId,
+          },
+        });
+        // return updated user
+        await User.findOne({
+          where: {
+            googleId,
+          },
+        }).then((user) => res.send(user));
+      } else {
+        throw response;
+      }
+    })
+    // if name has been taken, make user pic new name
+    .catch((error) => {
+      console.error(error);
+      res.status(400).send('failure');
     });
 });
 
