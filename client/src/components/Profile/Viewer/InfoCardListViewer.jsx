@@ -1,5 +1,5 @@
 import React from 'react';
-import InfoCardEntry from './InfoCardListEntry.jsx';
+import InfoCardEntry from './InfoCardListEntryViewer.jsx';
 
 const InfoCardList = () => (
   <div>

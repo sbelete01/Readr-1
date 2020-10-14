@@ -46,6 +46,7 @@ const ProfileView = () => {
       justify="center"
       alignItems="center"
       className={classes.paper}
+      style={{ width: '500px' }}
     >
       <div>
         <ButtonGroup>
@@ -57,7 +58,6 @@ const ProfileView = () => {
           </Button>
         </ButtonGroup>
         <div>
-          <h1> THIS IS THE RENDER VIEW </h1>
           {renderview()}
         </div>
       </div>

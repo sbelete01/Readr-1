@@ -11,7 +11,7 @@ import ReaderView from './ReaderView.jsx';
 import FollowingView from './FollowingView.jsx';
 import Landing from './Landing.jsx';
 import Preference from './Preference.jsx';
-import ProfileView from './Profile/ProfileView.jsx';
+import ProfileView from './Profile/Views/ProfileView.jsx';
 
 const theme = createMuiTheme({
   palette: {
