@@ -28,6 +28,7 @@ const User = db.define('user', {
   username: Sequelize.STRING,
   googleId: Sequelize.STRING,
   isQuizzed: Sequelize.BOOLEAN,
+  chosenName: Sequelize.STRING,
 });
 
 // creating the table for the books api informations
@@ -93,8 +94,18 @@ const UserPreference = db.define('user_preference', {
   romance: Sequelize.FLOAT,
 });
 
+User.sync();
+Book.sync();
+UserFollower.sync();
+UserBlocked.sync();
+UserBook.sync();
+UserPreference.sync();
+
+// for clearing database
+// db.sync({ force: true });
+
 // { force: true } add into sync if db change is made
-db.sync({ force: true }).then(() => {
+db.authenticate().then(() => {
   console.log('connected to database');
 }).catch((err) => { console.log(err); });
 

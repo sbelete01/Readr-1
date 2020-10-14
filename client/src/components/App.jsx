@@ -12,6 +12,8 @@ import FollowingView from './FollowingView.jsx';
 import Landing from './Landing.jsx';
 import Preference from './Preference.jsx';
 import ProfileView from './Profile/Views/ProfileView.jsx';
+import ChooseName from './ChooseName.jsx';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -46,6 +48,7 @@ class App extends React.Component {
   componentDidMount() {
     axios.get('/auth/user').then((response) => {
       if (response.data.user) {
+        console.log(response.data.user);
         this.setState({
           isLoggedIn: true,
           user: response.data.user,

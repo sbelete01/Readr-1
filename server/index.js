@@ -10,7 +10,7 @@ const cookieSession = require('cookie-session');
 const authRoutes = require('./auth-routes');
 const readrRoutes = require('./readr-routes');
 
-const PORT = process.env.PORT || 3306;
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 // initialize cookie session
