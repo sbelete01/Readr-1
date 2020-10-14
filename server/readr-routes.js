@@ -76,6 +76,10 @@ router.get('/following', (req, res) => {
     });
 });
 
+router.get('/profile', (req, res) => {
+  res.send('successfully connected to /profile');
+});
+
 // Endpoint to follow a user
 router.post('/follow/:followerID', (req, res) => {
   const { user } = req;
@@ -152,7 +156,7 @@ router.post('/booklist', (req, res) => {
 
 // reset user genre preferences
 router.patch('/reset', (req, res) => {
-  const { id, googleId } = req.body
+  const { id, googleId } = req.body;
   // reset isquizzed in db
   User.update(
     { isQuizzed: false },
