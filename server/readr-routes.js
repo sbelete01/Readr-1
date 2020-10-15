@@ -8,11 +8,7 @@ const {
   getInfo,
 } = require('./suggestion');
 const dbHelpers = require('../sequelize/db-helpers');
-<<<<<<< HEAD
-const { User, UserFollower } = require('../sequelize/index');
-=======
-const { User, UserHaveRead } = require('../sequelize/index');
->>>>>>> 5491922... :(update) data into user view
+const { User, UserFollower, UserHaveRead } = require('../sequelize/index');
 
 const authCheck = (req, res, next) => {
   if (!req.user) {
@@ -309,9 +305,7 @@ router.get('/getFriends', async (req, res) => {
       followerID: id,
     },
   })
-    .then((friendsList) => {
-      return friendsList.map((friend) => friend.dataValues.userID);
-    });
+    .then((friendsList) => friendsList.map((friend) => friend.dataValues.userID));
   // get list of names for those you're following
   const getFriends = async () => Promise.all(friends.map((friendId) => User.findOne({
     where: {

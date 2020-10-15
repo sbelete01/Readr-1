@@ -50,7 +50,15 @@ const Buttons = () => {
         to="/addFriend"
         className={classes.button}
       >
-        Tester
+        TesterFriend
+      </Button>
+      <Button
+        size="large"
+        component={Link}
+        to="/profile"
+        className={classes.button}
+      >
+        TesterViews
       </Button>
       <Button
         size="large"

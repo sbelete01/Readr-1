@@ -104,6 +104,7 @@ class App extends React.Component {
                     <Route exact path="/readnow" render={(props) => <ReaderView {...props} urlSnippet={urlSnippet} />} />
                     <Route exact path="/preferences" component={Preference} />
                     <Route exact path="/profile" render={(props) => <ProfileView {...props} user={user} />} />
+                    <Route exact path="/addFriend" render={(props) => <AddFriend {...props} user={user} />} />
                   </Switch>
                 </div>
               </div>

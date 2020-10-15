@@ -84,7 +84,14 @@ export default function SmallBar() {
           component={Link}
           to="/addFriend"
         >
-          Tester
+          TesterFriend
+        </MenuItem>
+        <MenuItem
+          onClick={handleClose}
+          component={Link}
+          to="/profile"
+        >
+          TesterViews
         </MenuItem>
         <MenuItem
           onClick={handleClose}
