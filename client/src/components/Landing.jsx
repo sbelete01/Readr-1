@@ -4,7 +4,7 @@ import SelectGenre from './Preference.jsx';
 import ChooseName from './ChooseName.jsx';
 import SuggestionView from './SuggestionView.jsx';
 
-function Landing({ user }) {
+function Landing({ user, updateUser }) {
   const { isQuizzed } = user;
 
   return (
@@ -16,7 +16,7 @@ function Landing({ user }) {
           </div>
         ) : (
           <div>
-            <ChooseName user={user} />
+            <ChooseName user={user} updateUser={updateUser} />
           </div>
         )}
       </Grid>

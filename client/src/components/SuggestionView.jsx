@@ -17,7 +17,6 @@ class SuggestionView extends React.Component {
     super(props);
     this.state = {
       bookSuggestion: null,
-      user: useHistory().location.state.user,
       // ---FORMAT IS THIS
       /* author: "Susan Wiggs"
        * coverURL: "http...."

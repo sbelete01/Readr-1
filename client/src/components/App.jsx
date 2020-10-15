@@ -36,6 +36,7 @@ class App extends React.Component {
       urlSnippet: 'shakespearescom000shak',
     };
     this.updateUrlSnippet = this.updateUrlSnippet.bind(this);
+    this.updateUser = this.updateUser.bind(this);
   }
 
   /* Sends request to server to get a book suggestion from google books API.
@@ -62,6 +63,10 @@ class App extends React.Component {
     });
   }
 
+  updateUser(obj) {
+    this.setState({ user: obj });
+  }
+
   updateUrlSnippet(urlSnippet) {
     this.setState({ urlSnippet });
   }
@@ -70,6 +75,7 @@ class App extends React.Component {
     const {
       isLoggedIn, user, userBookList, urlSnippet,
     } = this.state;
+    console.log(user, 'user in app render');
     return (
       <MuiThemeProvider theme={theme}>
         <div className="App">
@@ -89,7 +95,7 @@ class App extends React.Component {
                       exact
                       path="/"
                       render={(props) => (
-                        <Landing {...props} user={user} />
+                        <Landing {...props} user={user} updateUser={this.updateUser} />
                       )}
                     />
                     <Route
@@ -102,8 +108,8 @@ class App extends React.Component {
                     {/* HOW TO PASS PROPS IN REACT ROUTE v4. ESLINT DISLIKES IT */}
                     <Route exact path="/booklist" render={(props) => <BookListView {...props} user={user} updateUrlSnippet={this.updateUrlSnippet} />} />
                     <Route exact path="/readnow" render={(props) => <ReaderView {...props} urlSnippet={urlSnippet} />} />
-                    <Route exact path="/preferences" render={(props) => <Preference {...props} user={user} />} />
-                    <Route exact path="/profile" render={(props) => <ProfileView {...props} user={user} />} />
+                    <Route exact path="/preferences" render={(props) => <Preference {...props} user={user} updateUser={this.updateUser} />} />
+                    <Route exact path="/profile" render={(props) => <ProfileView {...props} user={user} updateUser={this.updateUser} />} />
                     <Route exact path="/addFriend" render={(props) => <AddFriend {...props} user={user} />} />
                   </Switch>
                 </div>
