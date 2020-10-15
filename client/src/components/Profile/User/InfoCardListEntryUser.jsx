@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-expressions */
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Grid, Paper, Typography, ButtonBase,
@@ -20,11 +23,23 @@ const useStyles = makeStyles((theme) => ({
     width: '500px',
     maxWidth: 500,
   },
+  item: {
+    padding: '10px',
+    textAlign: 'center',
+  },
   image: {
-    width: 128,
-    height: 128,
+    width: 200,
+    height: 200,
   },
   img: {
+    margin: 'auto',
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '100%',
+  },
+  dialogimg: {
+    width: 300,
+    height: 500,
     margin: 'auto',
     display: 'block',
     maxWidth: '100%',
@@ -33,11 +48,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const InfoCardEntry = () => {
+const InfoCardEntry = ({ book }) => {
   const classes = useStyles();
   const [isClicked, setClicked] = useState(false);
   const [buttonView, setButtonView] = useState();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [zoomOpen, setZoomOpen] = useState(false);
+
+
+  const zoomPicOpen = () => {
+    setZoomOpen(true);
+  };
+
+  const zoomPicClose = () => {
+    setZoomOpen(false);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -64,23 +89,71 @@ const InfoCardEntry = () => {
       );
     }
   };
-  const string = 'Feed (2002) is a young adult dystopian novel of the cyberpunk subgenre written by M. T. Anderson. The novel focuses on issues such as corporate power, consumerism, information technology, data mining, and environmental decay, with a sometimes sardonic, sometimes somber tone. From the first-person perspective of a teenager, the book takes place in a near-futuristic American culture completely dominated by advertising and corporate exploitation, corresponding to the enormous popularity of internetworking brain implants.';
+
+  // const string = { summary };
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={3}>
         <Grid container spacing={2}>
           <Grid item>
-            <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src="https://i.imgur.com/Sbkselg.jpg" />
+            <ButtonBase className={classes.image} onClick={() => zoomPicOpen()}>
+              <img className={classes.img} alt="complex" src={book.coverURL} />
             </ButtonBase>
+            <Dialog
+              open={zoomOpen}
+              onClose={zoomPicClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogContent>
+                <img className={classes.dialogimg} alt="complex" src={book.coverURL} />
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={zoomPicClose}
+                  variant="outlined"
+                  color="primary"
+                >
+                        Close
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Grid>
           <Grid item xs sm container>
             <Grid item container direction="column">
               <Grid item>
-                <Typography gutterBottom variant="subtitle1">
-                  <div onClick={handleClick} style={{ textAlign: 'justify' }}>
-                    {isClicked ? string : string.substring(0, 250)}
+                <Grid
+                  item
+                  container
+                  direction="row"
+                >
+                  <Grid
+                    item
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Typography variant="subtitle1">
+                      {book.title}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Typography variant="subtitle2" style={{ marginBottom: '10px' }}>
+                      {book.author}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Typography gutterBottom variant="caption">
+                  <div onClick={handleClick} style={{ textAlign: 'justify', margin: 'auto' }}>
+                    {isClicked ? `${book.description}` : `${`${book.description}`.substring(0, 100)}(...)`}
                   </div>
                 </Typography>
               </Grid>

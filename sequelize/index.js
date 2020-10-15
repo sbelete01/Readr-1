@@ -92,6 +92,27 @@ const UserBook = db.define('user_book', {
   is_interested: Sequelize.BOOLEAN,
 });
 
+const UserHaveRead = db.define('user_read', {
+  userID: {
+    type: Sequelize.INTEGER,
+  },
+  isbn: {
+    type: Sequelize.STRING,
+  },
+  coverURL: {
+    type: Sequelize.STRING,
+  },
+  title: {
+    type: Sequelize.STRING,
+  },
+  author: {
+    type: Sequelize.STRING,
+  },
+  description: {
+    type: Sequelize.TEXT,
+  },
+  have_read: Sequelize.BOOLEAN,
+});
 const UserPreference = db.define('user_preference', {
   userID: Sequelize.INTEGER,
   comedy: Sequelize.FLOAT,
@@ -100,20 +121,13 @@ const UserPreference = db.define('user_preference', {
   romance: Sequelize.FLOAT,
 });
 
-User.sync();
-Book.sync();
-UserFollower.sync();
-UserBlocked.sync();
-UserBook.sync();
-UserPreference.sync();
-
-// for clearing database
+// forces data base drop
 // db.sync({ force: true });
 
 // { force: true } add into sync if db change is made
 db.authenticate().then(() => {
   console.log('connected to database');
-}).catch((err) => { console.log(err); });
+}).catch((err) => console.log(err));
 
 module.exports.User = User;
 module.exports.Book = Book;
@@ -121,3 +135,4 @@ module.exports.UserFollower = UserFollower;
 module.exports.UserBlocked = UserBlocked;
 module.exports.UserBook = UserBook;
 module.exports.UserPreference = UserPreference;
+module.exports.UserHaveRead = UserHaveRead;

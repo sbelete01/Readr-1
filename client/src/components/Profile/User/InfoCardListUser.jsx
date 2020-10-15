@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 import InfoCardEntry from './InfoCardListEntryUser.jsx';
 
-const InfoCardList = () => (
-  <div>
-    <InfoCardEntry />
-  </div>
-);
+const InfoCardList = ({ book }) =>
+// console.log(bookData, 'DATA');
 
+  (
+    <div>
+      <InfoCardEntry book={book} />
+    </div>
+  );
 export default InfoCardList;
