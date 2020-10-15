@@ -8,7 +8,7 @@ const {
   getInfo,
 } = require('./suggestion');
 const dbHelpers = require('../sequelize/db-helpers');
-const { User } = require('../sequelize/index');
+const { User, UserFollower } = require('../sequelize/index');
 
 const authCheck = (req, res, next) => {
   if (!req.user) {
@@ -220,6 +220,72 @@ router.post('/saveName', async (req, res) => {
       console.error(error);
       res.status(400).send('failure');
     });
+});
+
+router.post('/addFriend', async (req, res) => {
+  const { friend } = req.body;
+  const { chosenName, id } = req.body.user;
+  // get user ID of friend
+  const friendId = await User.findOne({
+    where: {
+      chosenName: friend,
+    },
+  })
+    .then((foundFriend) => {
+      if (foundFriend) {
+        console.log(foundFriend, 'foundFriend');
+        return foundFriend.dataValues.id;
+      }
+      throw foundFriend;
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(400).send('username not found');
+    });
+  // add your userID to that persons following list
+  await UserFollower.findOne({
+    where: {
+      userID: friendId,
+      followerID: id,
+    },
+  })
+    .then(async (response) => {
+      // if not already following, follow
+      if (!response) {
+        await UserFollower.create({
+          userID: friendId,
+          followerID: id,
+        });
+      } else {
+        throw response;
+      }
+    })
+    .catch(() => {
+      console.error(error);
+      res.status(400).send('Already following');
+    });
+});
+
+router.get('/getFriends', async (req, res) => {
+  const { id } = req.user.dataValues;
+  // get list of IDs for those you're following
+  const friends = await UserFollower.findAll({
+    where: {
+      followerID: id,
+    },
+  })
+    .then((friendsList) => {
+      return friendsList.map((friend) => friend.dataValues.userID);
+    });
+  // get list of names for those you're following
+  const getFriends = async () => Promise.all(friends.map((friendId) => User.findOne({
+    where: {
+      id: friendId,
+    },
+  })
+    .then((foundFriend) => foundFriend.dataValues.chosenName)));
+  const response = await getFriends().then((data) => data);
+  res.send(response);
 });
 
 module.exports = router;

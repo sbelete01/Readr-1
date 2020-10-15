@@ -12,7 +12,7 @@ import FollowingView from './FollowingView.jsx';
 import Landing from './Landing.jsx';
 import Preference from './Preference.jsx';
 import ProfileView from './Profile/Views/ProfileView.jsx';
-import ChooseName from './ChooseName.jsx';
+import AddFriend from './AddFriend.jsx';
 
 
 const theme = createMuiTheme({
@@ -103,7 +103,7 @@ class App extends React.Component {
                     <Route exact path="/booklist" render={(props) => <BookListView {...props} user={user} updateUrlSnippet={this.updateUrlSnippet} />} />
                     <Route exact path="/readnow" render={(props) => <ReaderView {...props} urlSnippet={urlSnippet} />} />
                     <Route exact path="/preferences" component={Preference} />
-                    <Route exact path="/profile" component={ProfileView} />
+                    <Route exact path="/addFriend" render={(props) => <AddFriend {...props} user={user} />} />
                   </Switch>
                 </div>
               </div>
