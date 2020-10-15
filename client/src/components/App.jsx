@@ -102,7 +102,7 @@ class App extends React.Component {
                     {/* HOW TO PASS PROPS IN REACT ROUTE v4. ESLINT DISLIKES IT */}
                     <Route exact path="/booklist" render={(props) => <BookListView {...props} user={user} updateUrlSnippet={this.updateUrlSnippet} />} />
                     <Route exact path="/readnow" render={(props) => <ReaderView {...props} urlSnippet={urlSnippet} />} />
-                    <Route exact path="/preferences" component={Preference} />
+                    <Route exact path="/preferences" render={(props) => <Preference {...props} user={user} />} />
                     <Route exact path="/profile" render={(props) => <ProfileView {...props} user={user} />} />
                     <Route exact path="/addFriend" render={(props) => <AddFriend {...props} user={user} />} />
                   </Switch>

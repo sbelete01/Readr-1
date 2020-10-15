@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import Zoom from '@material-ui/core/Zoom';
 import Slider from './BookTinder.jsx';
@@ -16,6 +17,7 @@ class SuggestionView extends React.Component {
     super(props);
     this.state = {
       bookSuggestion: null,
+      user: useHistory().location.state.user,
       // ---FORMAT IS THIS
       /* author: "Susan Wiggs"
        * coverURL: "http...."

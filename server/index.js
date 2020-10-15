@@ -9,6 +9,7 @@ require('../config/passport-setup');
 const cookieSession = require('cookie-session');
 const authRoutes = require('./auth-routes');
 const readrRoutes = require('./readr-routes');
+const bcRoutes = require('./bookClub-routes');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -28,6 +29,8 @@ app.use(bodyParser.json());
 
 app.use('/auth', authRoutes);
 app.use('/readr', readrRoutes);
+app.use('/bc', bcRoutes);
+
 
 // catch all for refresh issues
 app.get('/*', (req, res) => {
