@@ -27,15 +27,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ProfileView = ({ user }) => {
+const ProfileView = ({ user, updateUser }) => {
   const [view, setView] = useState('');
   const classes = useStyles();
   const [userID, setUserID] = useState();
   const [bookData, setBookData] = useState([]);
 
   const bookDataArr = [];
+  console.log(user, 'user from profile view - outside of use effect');
 
   useEffect(() => {
+    console.log(user, 'user from profile view');
     setUserID(user.id);
     const params = {
       userID,

@@ -122,7 +122,7 @@ const UserPreference = db.define('user_preference', {
 });
 
 // forces data base drop
-// db.sync({ force: true });
+db.sync({ force: true });
 
 // { force: true } add into sync if db change is made
 db.authenticate().then(() => {
