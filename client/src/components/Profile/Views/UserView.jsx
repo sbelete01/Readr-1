@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Grid, Paper, Typography, ButtonBase,
 } from '@material-ui/core';
+import axios from 'axios';
 import { Row, Col } from 'react-bootstrap';
 import InfoCardList from '../User/InfoCardListUser.jsx';
 
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const UserView = () => {
+const UserView = ({ user, book }) => {
   const classes = useStyles();
 
   return (
@@ -60,7 +61,7 @@ const UserView = () => {
               alignItems="center"
             >
               <Typography variant="subtitle1">
-                username
+                {user.chosenName}
               </Typography>
             </Grid>
             <Grid
@@ -72,8 +73,8 @@ const UserView = () => {
               container
               direction="row"
             >
-              <Typography variant="subtitle1" color="textSecondary">
-                @username
+              <Typography variant="caption" color="textSecondary">
+                @{user.chosenName}
               </Typography>
             </Grid>
           </Grid>
@@ -155,7 +156,7 @@ const UserView = () => {
             </Grid>
           </Grid>
           <Grid item style={{ marginTop: '10px' }}>
-            <InfoCardList />
+            <InfoCardList book={book} />
           </Grid>
         </Grid>
       </Paper>

@@ -141,7 +141,10 @@ function BookListItem(props) {
             color="primary"
             size="small"
             className={classes.button}
-            onClick={() => handleAddToReadList(book.isbn, book.coverURL, book.title, book.author, book.description, true)}
+            onClick={() => {
+              handleAddToReadList(book.isbn, book.coverURL, book.title, book.author, book.description, true);
+              handleRemoveClick(book.isbn, false);
+            }}
           >
             Read
           </Button>

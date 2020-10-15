@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Button, ButtonGroup, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import UserView from './UserView.jsx';
@@ -26,13 +27,45 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ProfileView = () => {
+const ProfileView = ({ user }) => {
   const [view, setView] = useState('');
   const classes = useStyles();
+  const [userID, setUserID] = useState();
+  const [bookData, setBookData] = useState([]);
+
+  const bookDataArr = [];
+
+  useEffect(() => {
+    setUserID(user.id);
+    const params = {
+      userID,
+    };
+    axios.get('/readr/haveread', { params })
+      .then(({ data }) => {
+        data.forEach((book) => {
+          bookDataArr.push({
+            title: book.title,
+            author: book.author,
+            coverURL: book.coverURL,
+            description: book.description,
+            isbn: book.isbn,
+            review: 'INSERT REVIEW HERE',
+          });
+          setBookData(bookDataArr);
+        });
+      });
+  }, [userID]);
+
 
   const renderview = () => {
     if (view === 'user') {
-      return <UserView />;
+      return (
+        <div>
+          {bookData.map((book) => (
+            <UserView user={user} book={book} />
+          ))}
+        </div>
+      );
     }
     if (view === 'viewer') {
       return <ViewerView />;

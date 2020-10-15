@@ -1,24 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 import InfoCardEntry from './InfoCardListEntryUser.jsx';
 
-const InfoCardList = () => {
-  const [userID, setUserID] = useState();
+const InfoCardList = ({ book }) =>
+// console.log(bookData, 'DATA');
 
-  useEffect(() => {
-    const params = {
-      userID,
-    };
-    axios.get('/readr/haveread', { params })
-      .then(({ data }) => {
-        console.log(data, 'ENTRY DATA');
-      });
-  });
-
-  return (
+  (
     <div>
-      <InfoCardEntry />
+      <InfoCardEntry book={book} />
     </div>
   );
-};
-
 export default InfoCardList;
