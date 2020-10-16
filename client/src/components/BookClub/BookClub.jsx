@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { TextField, Grid, Button } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import {
+  TextField, Grid, Button, Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -16,21 +18,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// Refer to the Node.js quickstart on how to setup the environment:
-// https://developers.google.com/calendar/quickstart/node
-// Change the scope to 'https://www.googleapis.com/auth/calendar' and delete any
-// stored credentials.
-
 
 const BookClub = () => {
   const classes = useStyles();
-  const empty = {};
-  const [end, setEnd] = useState();
-  const [title, setTitle] = useState();
+  const [startDate, setStart] = useState('');
+  const [endDate, setEnd] = useState('');
+  const [link, setLink] = useState('');
+  const [title, setTitle] = useState('');
 
   const { gapi } = window;
   const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
   const SCOPES = 'https://www.googleapis.com/auth/calendar.events';
+
+  // create email variable to house all user emails that i follow
+
 
   const addToCalendar = () => {
     gapi.load('client:auth2', () => {
@@ -47,25 +48,25 @@ const BookClub = () => {
         .then(() => {
           const event = {
             summary: `${title}`,
-            location: '800 Howard St., San Francisco, CA 94103',
-            description: 'A chance to hear more about Google\'s developer products.',
+            location: 'Your computer',
+            description: `Meet here by clicking: ${link}!`,
+            sendUpdates: 'all',
             start: {
-              dateTime: '2020-10-28',
-              timeZone: 'America/Los_Angeles',
+              date: `${startDate}`,
+              timeZone: 'America/Chicago',
             },
             end: {
-              dateTime: '2020-10-28',
-              timeZone: 'America/Los_Angeles',
+              date: `${endDate}`,
+              timeZone: 'America/Chicago',
             },
             recurrence: [
-              'RRULE:FREQ=DAILY;COUNT=2',
+              'RRULE:FREQ=MONTHLY;COUNT=10;BYDAY=1FR',
             ],
             attendees: [
-              { email: 'lpage@example.com' },
-              { email: 'sbrin@example.com' },
+              { email: 'larryschwall@gmail.com' },
             ],
             reminders: {
-              useDefault: false,
+              useDefault: true,
               overrides: [
                 { method: 'email', minutes: 24 * 60 },
                 { method: 'popup', minutes: 10 },
@@ -76,6 +77,7 @@ const BookClub = () => {
           const request = gapi.client.calendar.events.insert({
             calendarId: 'primary',
             resource: event,
+            sendNotifications: true,
           });
           request.execute((event) => {
             window.open(event.htmlLink);
@@ -96,7 +98,11 @@ const BookClub = () => {
           {/* THIS IS THE 1st ROW */}
           <Grid item container direction="row">
             <Grid item container xs direction="column" className={classes.test}>
-              <TextField onChange={(e) => { setTitle(e.target.value); }} />
+              <TextField label="Book Title" onChange={(e) => setTitle(e.target.value)} />
+              <TextField label="Hangout Link" placeholder="Paste Hangout link here" onChange={(e) => setLink(e.target.value)} />
+              <Typography variant="subtitle2">
+              Get your hangout link here: <a href="https://hangouts.google.com/" target="_blank">https://hangouts.google.com/</a>
+              </Typography>
             </Grid>
             <Grid item container xs direction="column" className={classes.test}>
             Who to invite
@@ -104,16 +110,27 @@ const BookClub = () => {
             <Grid item container xs direction="column" className={classes.test}>
               <TextField
                 id="date"
-                label="Birthday"
+                label="Start Date"
                 type="date"
-                defaultValue="2020-10-15"
+                defaultValue={new Date().toISOString()}
                 className={classes.textField}
                 InputLabelProps={{
                   shrink: true,
                 }}
-                onSelect={(e) => {
-                  console.log(e.target.value, 'DATE');
-                  console.log(typeof e.target.value, 'type');
+                onChange={(e) => {
+                  setStart(e.target.value);
+                }}
+              />
+              <TextField
+                id="date"
+                label="End Date"
+                type="date"
+                defaultValue={new Date().toISOString()}
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={(e) => {
                   setEnd(e.target.value);
                 }}
               />
@@ -136,8 +153,6 @@ const BookClub = () => {
 
       </Grid>
     </div>
-
-  // <div />
   );
 };
 
