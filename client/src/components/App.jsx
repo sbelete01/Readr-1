@@ -14,6 +14,7 @@ import Preference from './Preference.jsx';
 import ProfileView from './Profile/Views/ProfileView.jsx';
 import AddFriend from './AddFriend.jsx';
 import ClubList from './Chatroom/ClubList.jsx';
+import BookClub from './BookClub/BookClub.jsx';
 
 
 const theme = createMuiTheme({
@@ -105,7 +106,6 @@ class App extends React.Component {
                       render={(props) => (
                         <SuggestionView {...props} user={user} />)}
                     />
-                    <Route exact path="/following" component={FollowingView} />
                     {/* HOW TO PASS PROPS IN REACT ROUTE v4. ESLINT DISLIKES IT */}
                     <Route exact path="/booklist" render={(props) => <BookListView {...props} user={user} updateUrlSnippet={this.updateUrlSnippet} />} />
                     <Route exact path="/readnow" render={(props) => <ReaderView {...props} urlSnippet={urlSnippet} />} />
@@ -113,6 +113,7 @@ class App extends React.Component {
                     <Route exact path="/profile" render={(props) => <ProfileView {...props} user={user} updateUser={this.updateUser} />} />
                     <Route exact path="/addFriend" render={(props) => <AddFriend {...props} user={user} />} />
                     <Route exact path="/bookclubs" render={(props) => <ClubList {...props} user={user} />} />
+                    <Route exact path="/bookclubinvite" render={(props) => <BookClub {...props} user={user} />} />
                   </Switch>
                 </div>
               </div>

@@ -34,16 +34,9 @@ const Buttons = () => {
         to="/booklist"
         className={classes.button}
       >
-        Favorites
+        Reading List
       </Button>
-      <Button
-        size="large"
-        component={Link}
-        to="/following"
-        className={classes.button}
-      >
-        Following
-      </Button>
+
       <Button
         size="large"
         component={Link}
@@ -59,6 +52,14 @@ const Buttons = () => {
         className={classes.button}
       >
         TesterViews
+      </Button>
+      <Button
+        size="large"
+        component={Link}
+        to="/bookclubinvite"
+        className={classes.button}
+      >
+        Testerclubinvite
       </Button>
       <Button
         size="large"

@@ -145,8 +145,22 @@ function BookListItem(props) {
               handleAddToReadList(book.isbn, book.coverURL, book.title, book.author, book.description, true);
               handleRemoveClick(book.isbn, false);
             }}
+            startIcon
           >
-            Read
+            Finished
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            className={classes.button}
+            // onClick={() => {
+            //   handleAddToReadList(book.isbn, book.coverURL, book.title, book.author, book.description, true);
+            //   handleRemoveClick(book.isbn, false);
+            // }}
+            startIcon
+          >
+            Create Book Club
           </Button>
         </Grid>
       </Grid>

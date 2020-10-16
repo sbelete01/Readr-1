@@ -245,6 +245,8 @@ Bookclubs.sync();
 UserBookClubs.sync();
 
 
+// forces data base drop
+// db.sync({ force: true });
 
 db.authenticate().then(() => {
   console.log('connected to database');
