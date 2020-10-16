@@ -12,7 +12,6 @@ const AddFriend = ({ user }) => {
   useEffect(() => {
     Axios.get('readr/getFriends', { user })
       .then(({ data }) => {
-        console.log(data, 'friends');
         setFriendsList(data);
       });
   }, []);
@@ -20,7 +19,6 @@ const AddFriend = ({ user }) => {
   const handleSubmit = () => {
     Axios.post('/readr/addFriend', { user, friend })
       .then(({ data }) => {
-        console.log(data);
         // history.push('/preferences', { user: data });
       })
       .catch((error) => {
