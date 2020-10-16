@@ -13,11 +13,8 @@ import Landing from './Landing.jsx';
 import Preference from './Preference.jsx';
 import ProfileView from './Profile/Views/ProfileView.jsx';
 import AddFriend from './AddFriend.jsx';
-<<<<<<< HEAD
 import ClubList from './Chatroom/ClubList.jsx';
-=======
 import BookClub from './BookClub/BookClub.jsx';
->>>>>>> 945a55d... (update) connection to google calendar
 
 
 const theme = createMuiTheme({
@@ -115,11 +112,8 @@ class App extends React.Component {
                     <Route exact path="/preferences" render={(props) => <Preference {...props} user={user} updateUser={this.updateUser} />} />
                     <Route exact path="/profile" render={(props) => <ProfileView {...props} user={user} updateUser={this.updateUser} />} />
                     <Route exact path="/addFriend" render={(props) => <AddFriend {...props} user={user} />} />
-<<<<<<< HEAD
                     <Route exact path="/bookclubs" render={(props) => <ClubList {...props} user={user} />} />
-=======
                     <Route exact path="/bookclubinvite" render={(props) => <BookClub {...props} user={user} />} />
->>>>>>> 945a55d... (update) connection to google calendar
                   </Switch>
                 </div>
               </div>
