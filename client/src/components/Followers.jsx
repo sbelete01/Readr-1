@@ -7,14 +7,18 @@ const Followers = ({ user }) => {
 
   useEffect(() => {
     Axios.get('/readr/getFollowers', { user })
-      .then((data) => {
+      .then(({ data }) => {
         console.log(data, 'data from followers');
+        setFollowersList(data);
       })
   }, []);
 
   return (
     <div>
       Followers
+      {followersList.map((flFollower) => (
+        <p>{flFollower.name}</p>
+      ))}
     </div>
   );
 };
