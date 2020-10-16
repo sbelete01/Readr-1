@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const BookClub = () => {
+const BookClub = ({ user }) => {
   const classes = useStyles();
   const [startDate, setStart] = useState('');
   const [endDate, setEnd] = useState('');
@@ -98,7 +98,13 @@ const BookClub = () => {
           {/* THIS IS THE 1st ROW */}
           <Grid item container direction="row">
             <Grid item container xs direction="column" className={classes.test}>
-              <TextField label="Book Title" onChange={(e) => setTitle(e.target.value)} />
+              <TextField
+                label="Book Title"
+                onChange={(e) => {
+                  console.log(bookDataArr);
+                  setTitle(e.target.value);
+                }}
+              />
               <TextField label="Hangout Link" placeholder="Paste Hangout link here" onChange={(e) => setLink(e.target.value)} />
               <Typography variant="subtitle2">
               Get your hangout link here: <a href="https://hangouts.google.com/" target="_blank">https://hangouts.google.com/</a>
