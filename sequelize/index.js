@@ -23,8 +23,16 @@ const db = new Sequelize({
   logging: false,
 });
 
+// forces data base drop
+// db.sync({ force: true });
+
 // creating the table for the user
 const User = db.define('user', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
   username: Sequelize.STRING,
   googleId: Sequelize.STRING,
   isQuizzed: Sequelize.BOOLEAN,
@@ -113,6 +121,7 @@ const UserHaveRead = db.define('user_read', {
   },
   have_read: Sequelize.BOOLEAN,
 });
+
 const UserPreference = db.define('user_preference', {
   userID: Sequelize.INTEGER,
   comedy: Sequelize.FLOAT,
@@ -121,10 +130,122 @@ const UserPreference = db.define('user_preference', {
   romance: Sequelize.FLOAT,
 });
 
-// forces data base drop
-db.sync({ force: true });
+const Bookclubs = db.define('bookclubs', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  bookName: Sequelize.STRING,
+  ghLink: Sequelize.STRING,
+});
 
-// { force: true } add into sync if db change is made
+const UserBookClubs = db.define('user_bookclubs', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  bookclubID: Sequelize.INTEGER,
+  userID: Sequelize.INTEGER,
+});
+
+const autopopulate = async () => {
+  const userOne = await User.findOne({ where: { id: 1 } })
+    .then((user) => !!user);
+  if (!userOne) {
+    User.create({
+      id: 1,
+      username: 'user one',
+      googleId: '123456789',
+      isQuizzed: true,
+      chosenName: 'userone',
+    });
+  }
+  const userTwo = await User.findOne({ where: { id: 2 } })
+    .then((user) => !!user);
+  if (!userTwo) {
+    User.create({
+      id: 2,
+      username: 'user two',
+      googleId: '987654321',
+      isQuizzed: true,
+      chosenName: 'usertwo',
+    });
+  }
+  const userThree = await User.findOne({ where: { id: 3 } })
+    .then((user) => !!user);
+  if (!userThree) {
+    User.create({
+      id: 3,
+      username: 'user three',
+      googleId: '547896321',
+      isQuizzed: true,
+      chosenName: 'userthree',
+    });
+  }
+  const bookclubOne = await Bookclubs.findOne({ where: { id: 1 } })
+    .then((bookclub) => !!bookclub);
+  if (!bookclubOne) {
+    Bookclubs.create({
+      id: 1,
+      bookName: 'Gone With The Wind',
+      ghLink: 'https://hangouts.google.com/call/KjpO5eAMiVSkX6j0Fl5sACEE',
+    });
+  }
+  const bookclubTwo = await Bookclubs.findOne({ where: { id: 2 } })
+    .then((bookclub) => !!bookclub);
+  if (!bookclubTwo) {
+    Bookclubs.create({
+      id: 2,
+      bookName: 'A Farewell To Arms',
+      ghLink: 'https://hangouts.google.com/call/QW3EwYg2n-tGMtXEgogSACEE',
+    });
+  }
+  const ubOne = await UserBookClubs.findOne({ where: { id: 1 } })
+    .then((ub) => !!ub);
+  if (!ubOne) {
+    UserBookClubs.create({
+      id: 1,
+      bookclubID: 1,
+      userID: 1,
+    });
+    UserBookClubs.create({
+      id: 2,
+      bookclubID: 1,
+      userID: 3,
+    });
+  }
+  const ubTwo = await UserBookClubs.findOne({ where: { id: 2 } })
+    .then((ub) => !!ub);
+  if (!ubTwo) {
+    UserBookClubs.create({
+      id: 3,
+      bookclubID: 2,
+      userID: 1,
+    });
+    UserBookClubs.create({
+      id: 4,
+      bookclubID: 2,
+      userID: 2,
+    });
+  }
+};
+
+autopopulate();
+
+User.sync();
+Book.sync();
+UserFollower.sync();
+UserBlocked.sync();
+UserBook.sync();
+UserPreference.sync();
+UserHaveRead.sync();
+Bookclubs.sync();
+UserBookClubs.sync();
+
+
+
 db.authenticate().then(() => {
   console.log('connected to database');
 }).catch((err) => console.log(err));
@@ -136,3 +257,5 @@ module.exports.UserBlocked = UserBlocked;
 module.exports.UserBook = UserBook;
 module.exports.UserPreference = UserPreference;
 module.exports.UserHaveRead = UserHaveRead;
+module.exports.Bookclubs = Bookclubs;
+module.exports.UserBookClubs = UserBookClubs;

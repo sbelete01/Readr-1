@@ -62,6 +62,14 @@ const Buttons = () => {
       </Button>
       <Button
         size="large"
+        component={Link}
+        to="/bookclubs"
+        className={classes.button}
+      >
+        TesterClubs
+      </Button>
+      <Button
+        size="large"
         href="/auth/logout"
         className={classes.button}
       >
