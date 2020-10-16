@@ -1,6 +1,8 @@
 import Axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import Followers from './Followers.jsx';
+
 
 const AddFriend = ({ user }) => {
   const [friend, setFriend] = useState('');
@@ -49,8 +51,11 @@ const AddFriend = ({ user }) => {
       <div>
         Friends List
         {friendsList.map((flFriend) => (
-          <p>{flFriend}</p>
+          <p>{flFriend.name}</p>
         ))}
+      </div>
+      <div>
+        <Followers user={user} />
       </div>
     </div>
   );
