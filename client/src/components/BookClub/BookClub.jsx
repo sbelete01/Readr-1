@@ -23,6 +23,7 @@ const BookClub = ({ user }) => {
   const classes = useStyles();
   const [startDate, setStart] = useState('');
   const [endDate, setEnd] = useState('');
+  const [friendsList, setFriendsList] = useState([]);
   const [link, setLink] = useState('');
   const [title, setTitle] = useState('');
 
@@ -30,6 +31,14 @@ const BookClub = ({ user }) => {
   const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
   const SCOPES = 'https://www.googleapis.com/auth/calendar.events';
 
+
+  useEffect(() => {
+    Axios.get('readr/getFriends', { user })
+      .then(({ data }) => {
+        console.log(data, 'friends');
+        setFriendsList(data);
+      });
+  }, []);
   // create email variable to house all user emails that i follow
 
 
@@ -67,10 +76,10 @@ const BookClub = ({ user }) => {
             ],
             reminders: {
               useDefault: true,
-              overrides: [
-                { method: 'email', minutes: 24 * 60 },
-                { method: 'popup', minutes: 10 },
-              ],
+              // overrides: [
+              //   { method: 'email', minutes: 24 * 60 },
+              //   { method: 'popup', minutes: 10 },
+              // ],
             },
           };
 
@@ -101,7 +110,6 @@ const BookClub = ({ user }) => {
               <TextField
                 label="Book Title"
                 onChange={(e) => {
-                  console.log(bookDataArr);
                   setTitle(e.target.value);
                 }}
               />

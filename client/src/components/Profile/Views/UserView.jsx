@@ -34,9 +34,9 @@ const useStyles = makeStyles((theme) => ({
 
 const UserView = ({ user, book }) => {
   const classes = useStyles();
-  const [friendsList, setFriendsList] = useState([]);
   const [view, setView] = useState('');
   const [isClicked, setClicked] = useState(false);
+  const [friendsList, setFriendsList] = useState([]);
 
   useEffect(() => {
     Axios.get('readr/getFriends', { user })
