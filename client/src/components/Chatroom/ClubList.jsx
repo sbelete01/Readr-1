@@ -8,7 +8,7 @@ const ClubList = ({ user }) => {
   useEffect(() => {
     const params = { user };
     console.log(params, 'useEffect in ClubList');
-    Axios.get('/readr/wtactualfuck', { params })
+    Axios.get('/readr/getBookclubs', { params })
       .then(({data}) => {
         console.log(data, 'data returned from axios request');
         setData(data);

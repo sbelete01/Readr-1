@@ -102,6 +102,13 @@ export default function SmallBar() {
         </MenuItem>
         <MenuItem
           onClick={handleClose}
+          component={Link}
+          to="/followers"
+        >
+          TesterFollowers
+        </MenuItem>
+        <MenuItem
+          onClick={handleClose}
         >
           <a
             href="/auth/logout"

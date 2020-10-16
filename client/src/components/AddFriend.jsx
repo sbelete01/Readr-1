@@ -49,7 +49,7 @@ const AddFriend = ({ user }) => {
       <div>
         Friends List
         {friendsList.map((flFriend) => (
-          <p>{flFriend}</p>
+          <p>{flFriend.name}</p>
         ))}
       </div>
     </div>

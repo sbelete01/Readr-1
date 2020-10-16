@@ -313,13 +313,16 @@ router.get('/getFriends', async (req, res) => {
       id: friendId,
     },
   })
-    .then((foundFriend) => foundFriend.dataValues.chosenName)));
+    .then((foundFriend) => ({
+      name: foundFriend.dataValues.chosenName,
+      email: foundFriend.dataValues.email,
+    }))));
   const response = await getFriends().then((data) => data);
   res.send(response);
 });
 
 
-router.get('/wtactualfuck', async (req, res) => {
+router.get('/getBookclubs', async (req, res) => {
   // get bookclub IDs
   const test2 = await UserBookClubs.findAll({
     where: {
@@ -350,5 +353,10 @@ router.get('/wtactualfuck', async (req, res) => {
   const response2 = await friendsNames();
   res.send(response2);
 });
+
+router.get('/getFollowers', (req, res) => {
+  console.log('followers');
+  res.status(201).send({ test: 'followers' });
+})
 
 module.exports = router;
