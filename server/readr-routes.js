@@ -8,7 +8,8 @@ const {
   getInfo,
 } = require('./suggestion');
 const dbHelpers = require('../sequelize/db-helpers');
-const { User, UserFollower, UserHaveRead } = require('../sequelize/index');
+const { User, UserFollower, UserHaveRead, UserBookClubs, Bookclubs } = require('../sequelize/index');
+const { Users } = require('react-feather');
 
 const authCheck = (req, res, next) => {
   if (!req.user) {
@@ -315,6 +316,39 @@ router.get('/getFriends', async (req, res) => {
     .then((foundFriend) => foundFriend.dataValues.chosenName)));
   const response = await getFriends().then((data) => data);
   res.send(response);
+});
+
+
+router.get('/wtactualfuck', async (req, res) => {
+  // get bookclub IDs
+  const test2 = await UserBookClubs.findAll({
+    where: {
+      userID: 1,
+    },
+  }).then((foundClubs) => foundClubs.map((club) => club.bookclubID));
+  const bookclubs = async () => Promise.all(test2.map((bookclubid) => Bookclubs.findOne({
+    where: {
+      id: bookclubid,
+    },
+  })));
+  const response = await bookclubs();
+  const friendsNames = async () => Promise.all(response.map(async (club) => {
+    const wut = await UserBookClubs.findAll({
+      where: {
+        bookclubID: club.id,
+      },
+    });
+    const innerFriendsNames = async () => Promise.all(wut.map((ubc) => User.findOne({
+      where: {
+        id: ubc.userID,
+      },
+    })
+      .then((user) => user.dataValues.chosenName)));
+    const finalName = await innerFriendsNames();
+    return { book: club.bookName, friends: finalName, hangoutLink: club.ghLink };
+  }));
+  const response2 = await friendsNames();
+  res.send(response2);
 });
 
 module.exports = router;

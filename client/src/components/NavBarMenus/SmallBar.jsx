@@ -95,6 +95,13 @@ export default function SmallBar() {
         </MenuItem>
         <MenuItem
           onClick={handleClose}
+          component={Link}
+          to="/bookclubs"
+        >
+          TesterClubs
+        </MenuItem>
+        <MenuItem
+          onClick={handleClose}
         >
           <a
             href="/auth/logout"
