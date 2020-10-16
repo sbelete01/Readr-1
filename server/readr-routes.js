@@ -354,9 +354,28 @@ router.get('/getBookclubs', async (req, res) => {
   res.send(response2);
 });
 
-router.get('/getFollowers', (req, res) => {
+router.get('/getFollowers', async (req, res) => {
   console.log('followers');
-  res.status(201).send({ test: 'followers' });
+  const { id } = req.user.dataValues;
+  // get list of IDs for those you're following
+  const friends = await UserFollower.findAll({
+    where: {
+      userID: id,
+    },
+  })
+    .then((followList) => followList.map((friend) => friend.dataValues.followerID));
+  // get list of names for those you're following
+  const getFriends = async () => Promise.all(friends.map((friendId) => User.findOne({
+    where: {
+      id: friendId,
+    },
+  })
+    .then((foundFriend) => ({
+      name: foundFriend.dataValues.chosenName,
+      email: foundFriend.dataValues.email,
+    }))));
+  const response = await getFriends().then((data) => data);
+  res.send(response);
 })
 
 module.exports = router;
