@@ -93,7 +93,6 @@ const BookClub = ({ user }) => {
       });
   };
 
-
   // THIS ADDS EVENT TO YOUR CALENDAR
   const addToCalendar = () => {
     gapi.load('client:auth2', () => {
