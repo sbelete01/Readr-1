@@ -1,6 +1,7 @@
 // Express router for all main features of the Readr app
 
 const router = require('express').Router();
+const { Users } = require('react-feather');
 const {
   categorySearch,
   selectCategory,
@@ -8,8 +9,9 @@ const {
   getInfo,
 } = require('./suggestion');
 const dbHelpers = require('../sequelize/db-helpers');
-const { User, UserFollower, UserHaveRead, UserBookClubs, Bookclubs } = require('../sequelize/index');
-const { Users } = require('react-feather');
+const {
+  User, UserFollower, UserHaveRead, UserBookClubs, Bookclubs,
+} = require('../sequelize/index');
 
 const authCheck = (req, res, next) => {
   if (!req.user) {
@@ -324,9 +326,14 @@ router.get('/getFriends', async (req, res) => {
 
 router.get('/getBookclubs', async (req, res) => {
   // get bookclub IDs
+  const { user } = req.query;
+  // eslint-disable-next-line dot-notation
+  // console.log(JSON.parse(user), 'PARSED');
+  // console.log(user['id'], 'SUER');
+  // console.log(id, 'ID');
   const test2 = await UserBookClubs.findAll({
     where: {
-      userID: 1,
+      userID: JSON.parse(user).id,
     },
   }).then((foundClubs) => foundClubs.map((club) => club.bookclubID));
   const bookclubs = async () => Promise.all(test2.map((bookclubid) => Bookclubs.findOne({
@@ -379,7 +386,9 @@ router.get('/getFollowers', async (req, res) => {
 });
 
 router.post('/clubInvite', async (req, res) => {
-  const { hangoutLink, friendsList, chosenName, title } = req.body.params;
+  const {
+    hangoutLink, friendsList, chosenName, title,
+  } = req.body.params;
   console.log('club invite sent');
   // create bookclub and add link, return bookclubID
   const bcID = await Bookclubs.create({
