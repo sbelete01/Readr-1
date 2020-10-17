@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import {
   TextField, Grid, Button, Typography,
 } from '@material-ui/core';
+import styled from 'styled-components';
 import Axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
+// import BookClubAttendee from './bookClubAttendee.jsx';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +31,8 @@ const BookClub = ({ user }) => {
   const [title, setTitle] = useState('');
   const [email, setEmail] = useState([]);
 
-  const emailArr = [];
+  const attendeeArr = [email];
+  // const emailArr = [];
 
   const { gapi } = window;
   const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
@@ -41,11 +44,11 @@ const BookClub = ({ user }) => {
       .then(({ data }) => {
         console.log(data, 'friends');
         setFriendsList(data);
-        data.forEach((friend) => {
-          console.log(friend.email);
-          emailArr.push({ email: friend.email });
-        });
-        setEmail(emailArr);
+        // data.forEach((friend) => {
+        //   console.log(friend.email);
+        //   emailArr.push({ email: friend.email });
+        // });
+        // setEmail(emailArr);
       });
     // test
     // const params = {
@@ -57,8 +60,6 @@ const BookClub = ({ user }) => {
     // Axios.post('readr/clubInvite', { params });
   }, []);
 
-  console.log(typeof email, 'EMAILS');
-
   const renderFollowingView = () => (
     <div>
       {friendsList.map((friend) => (
@@ -69,17 +70,36 @@ const BookClub = ({ user }) => {
           item
           container
           direction="row"
+          value={friend.email}
+          onClick={() => {
+            setEmail(email.concat({ email: friend.email }));
+          }}
         >
-          {friend.name}
+          <input type="checkbox" id={friend.name} />
+          <label htmlFor={friend.name}>{friend.name}</label>
         </Grid>
       ))}
     </div>
   );
 
 
-  // create email variable to house all user emails that i follow
+  // const onSubmit = () => {
+  //   const { chosenName } = user;
+
+  //   const params = {
+  //     hangoutLink: link,
+  //     friendsList,
+  //     chosenName,
+  //     title,
+  //   };
+  //   Axios.post('/readr/clubInvite', { params })
+  //     .then(({ data }) => {
+  //       console.log(data, 'DATA SEND TO SERVER FOR CLUB INVITE');
+  //     });
+  // };
 
 
+  // THIS ADDS EVENT TO YOUR CALENDAR
   const addToCalendar = () => {
     gapi.load('client:auth2', () => {
       console.log('loaded client');
@@ -95,8 +115,8 @@ const BookClub = ({ user }) => {
         .then(() => {
           const event = {
             summary: `${title}`,
-            location: 'Your computer',
-            description: `Meet here by clicking: ${link}!`,
+            location: `${link}`,
+            description: 'Thanks for coming!',
             sendUpdates: 'all',
             start: {
               date: `${startDate}`,
@@ -109,7 +129,7 @@ const BookClub = ({ user }) => {
             recurrence: [
               'RRULE:FREQ=MONTHLY;COUNT=10;BYDAY=1FR',
             ],
-            attendees: { emailArr },
+            attendees: email,
             reminders: {
               useDefault: true,
               // overrides: [
@@ -154,8 +174,33 @@ const BookClub = ({ user }) => {
               Get your hangout link here: <a href="https://hangouts.google.com/" target="_blank">https://hangouts.google.com/</a>
               </Typography>
             </Grid>
-            <Grid item container xs direction="column" className={classes.test}>
-              {renderFollowingView()}
+            <Grid
+              item
+              container
+              xs
+              direction="column"
+              className={classes.test}
+              justify="center"
+              alignItems="center"
+            >
+              <Grid
+                item
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                Add your followers here!
+              </Grid>
+              <Grid
+                item
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                {renderFollowingView()}
+              </Grid>
             </Grid>
             <Grid item container xs direction="column" className={classes.test}>
               <TextField
@@ -195,7 +240,13 @@ const BookClub = ({ user }) => {
             alignItems="center"
             className={classes.buttontest}
           >
-            <Button variant="outlined" color="primary" onClick={addToCalendar}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => {
+                addToCalendar();
+              }}
+            >
               Preview REMINDER
             </Button>
           </Grid>
