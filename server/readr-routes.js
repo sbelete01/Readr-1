@@ -376,6 +376,33 @@ router.get('/getFollowers', async (req, res) => {
     }))));
   const response = await getFriends().then((data) => data);
   res.send(response);
-})
+});
+
+router.post('/clubInvite', async (req, res) => {
+  const { hangoutLink, friendsList, chosenName, title } = req.body.params;
+  console.log('club invite sent');
+  // create bookclub and add link, return bookclubID
+  const bcID = await Bookclubs.create({
+    bookName: title,
+    ghLink: hangoutLink,
+  })
+    .then((data) => data.dataValues.id)
+    .catch((error) => console.log(error, 'error'));
+  // get userIDs for chosenName and friendsList
+  const namesList = [...friendsList, chosenName];
+  const getNames = async () => Promise.all(namesList.map((name) => User.findOne({
+    where: {
+      chosenName: name,
+    },
+  })
+    .then((foundName) => foundName.id)));
+  const idList = await getNames().then((data) => data);
+  // for each userID, add them to UserBookClubs
+  const joinUserBookclub = async () => Promise.all(idList.map((id) => UserBookClubs.create({
+    userID: id,
+    bookclubID: bcID,
+  })));
+  await joinUserBookclub();
+});
 
 module.exports = router;
