@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   TextField, Grid, Button, Typography,
 } from '@material-ui/core';
+import Axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -26,6 +27,9 @@ const BookClub = ({ user }) => {
   const [friendsList, setFriendsList] = useState([]);
   const [link, setLink] = useState('');
   const [title, setTitle] = useState('');
+  const [email, setEmail] = useState([]);
+
+  const emailArr = [];
 
   const { gapi } = window;
   const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
@@ -37,8 +41,34 @@ const BookClub = ({ user }) => {
       .then(({ data }) => {
         console.log(data, 'friends');
         setFriendsList(data);
+        data.forEach((friend) => {
+          console.log(friend.email);
+          emailArr.push({ email: friend.email });
+        });
+        setEmail(emailArr);
       });
   }, []);
+
+  console.log(typeof email, 'EMAILS');
+
+  const renderFollowingView = () => (
+    <div>
+      {friendsList.map((friend) => (
+        <Grid
+          className={classes.item}
+          justify="center"
+          alignItems="center"
+          item
+          container
+          direction="row"
+        >
+          {friend.name}
+        </Grid>
+      ))}
+    </div>
+  );
+
+
   // create email variable to house all user emails that i follow
 
 
@@ -71,9 +101,7 @@ const BookClub = ({ user }) => {
             recurrence: [
               'RRULE:FREQ=MONTHLY;COUNT=10;BYDAY=1FR',
             ],
-            attendees: [
-              { email: 'larryschwall@gmail.com' },
-            ],
+            attendees: { emailArr },
             reminders: {
               useDefault: true,
               // overrides: [
@@ -119,7 +147,7 @@ const BookClub = ({ user }) => {
               </Typography>
             </Grid>
             <Grid item container xs direction="column" className={classes.test}>
-            Who to invite
+              {renderFollowingView()}
             </Grid>
             <Grid item container xs direction="column" className={classes.test}>
               <TextField

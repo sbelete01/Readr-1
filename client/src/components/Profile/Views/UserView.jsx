@@ -37,12 +37,19 @@ const UserView = ({ user, book }) => {
   const [view, setView] = useState('');
   const [isClicked, setClicked] = useState(false);
   const [friendsList, setFriendsList] = useState([]);
+  const [followersList, setFollowersList] = useState([]);
+
 
   useEffect(() => {
     Axios.get('readr/getFriends', { user })
       .then(({ data }) => {
         console.log(data, 'friends');
         setFriendsList(data);
+      });
+    Axios.get('/readr/getFollowers', { user })
+      .then(({ data }) => {
+        console.log(data, 'data from followers');
+        setFollowersList(data);
       });
   }, []);
 
@@ -60,7 +67,28 @@ const UserView = ({ user, book }) => {
               container
               direction="row"
             >
-              {friend}
+              {friend.name}
+            </Grid>
+          ))}
+        </div>
+      );
+    }
+  };
+
+  const renderFollowersView = () => {
+    if (view === 'followers') {
+      return (
+        <div>
+          {followersList.map((follower) => (
+            <Grid
+              className={classes.item}
+              justify="center"
+              alignItems="center"
+              item
+              container
+              direction="row"
+            >
+              {follower.name}
             </Grid>
           ))}
         </div>
@@ -140,7 +168,14 @@ const UserView = ({ user, book }) => {
                     container
                     direction="row"
                   >
-                    <Typography variant="caption" color="textSecondary">
+                    <Typography
+                      variant="caption"
+                      color="textSecondary"
+                      onClick={() => {
+                        handleClick();
+                        setView('followers');
+                      }}
+                    >
                     Followers
                     </Typography>
                   </Grid>
@@ -153,7 +188,7 @@ const UserView = ({ user, book }) => {
                     direction="row"
                   >
                     <Typography variant="caption" color="textSecondary">
-                    6000
+                      {isClicked ? (renderFollowersView()) : null}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -192,10 +227,9 @@ const UserView = ({ user, book }) => {
                     direction="row"
                   >
                     <Typography variant="caption" color="textSecondary">
-                    25
+                      {isClicked ? (renderFollowingView()) : null}
                     </Typography>
                   </Grid>
-                  {isClicked ? (renderFollowingView()) : null}
                 </Grid>
               </Grid>
             </Grid>
