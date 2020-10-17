@@ -156,7 +156,6 @@ const autopopulate = async () => {
     .then((user) => !!user);
   if (!userOne) {
     User.create({
-      id: 1,
       username: 'user one',
       googleId: '123456789',
       isQuizzed: true,
@@ -167,7 +166,6 @@ const autopopulate = async () => {
     .then((user) => !!user);
   if (!userTwo) {
     User.create({
-      id: 2,
       username: 'user two',
       googleId: '987654321',
       isQuizzed: true,
@@ -178,7 +176,6 @@ const autopopulate = async () => {
     .then((user) => !!user);
   if (!userThree) {
     User.create({
-      id: 3,
       username: 'user three',
       googleId: '547896321',
       isQuizzed: true,
@@ -189,7 +186,6 @@ const autopopulate = async () => {
     .then((bookclub) => !!bookclub);
   if (!bookclubOne) {
     Bookclubs.create({
-      id: 1,
       bookName: 'Gone With The Wind',
       ghLink: 'https://hangouts.google.com/call/KjpO5eAMiVSkX6j0Fl5sACEE',
     });
@@ -198,7 +194,6 @@ const autopopulate = async () => {
     .then((bookclub) => !!bookclub);
   if (!bookclubTwo) {
     Bookclubs.create({
-      id: 2,
       bookName: 'A Farewell To Arms',
       ghLink: 'https://hangouts.google.com/call/QW3EwYg2n-tGMtXEgogSACEE',
     });
@@ -207,12 +202,10 @@ const autopopulate = async () => {
     .then((ub) => !!ub);
   if (!ubOne) {
     UserBookClubs.create({
-      id: 1,
       bookclubID: 1,
       userID: 1,
     });
     UserBookClubs.create({
-      id: 2,
       bookclubID: 1,
       userID: 3,
     });
@@ -221,12 +214,10 @@ const autopopulate = async () => {
     .then((ub) => !!ub);
   if (!ubTwo) {
     UserBookClubs.create({
-      id: 3,
       bookclubID: 2,
       userID: 1,
     });
     UserBookClubs.create({
-      id: 4,
       bookclubID: 2,
       userID: 2,
     });

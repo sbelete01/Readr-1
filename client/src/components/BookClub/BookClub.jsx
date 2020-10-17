@@ -47,6 +47,14 @@ const BookClub = ({ user }) => {
         });
         setEmail(emailArr);
       });
+    // test
+    // const params = {
+    //   hangoutLink: 'https://meet.google.com/zqw-okew-osy',
+    //   friendsList: ['userone', 'usertwo'],
+    //   chosenName: 'abc',
+    //   title: 'A Storm of Swords',
+    // }
+    // Axios.post('readr/clubInvite', { params });
   }, []);
 
   console.log(typeof email, 'EMAILS');
