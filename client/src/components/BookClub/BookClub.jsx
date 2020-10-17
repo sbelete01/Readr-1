@@ -31,7 +31,7 @@ const BookClub = ({ user }) => {
   const [title, setTitle] = useState('');
   const [email, setEmail] = useState([]);
 
-  const attendeeArr = [email];
+  // const attendeeArr = [email];
   // const emailArr = [];
 
   const { gapi } = window;
@@ -42,13 +42,8 @@ const BookClub = ({ user }) => {
   useEffect(() => {
     Axios.get('readr/getFriends', { user })
       .then(({ data }) => {
-        console.log(data, 'friends');
+        // console.log(data, 'friends');
         setFriendsList(data);
-        // data.forEach((friend) => {
-        //   console.log(friend.email);
-        //   emailArr.push({ email: friend.email });
-        // });
-        // setEmail(emailArr);
       });
     // test
     // const params = {
