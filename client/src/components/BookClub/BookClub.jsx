@@ -78,20 +78,20 @@ const BookClub = ({ user }) => {
   );
 
 
-  // const onSubmit = () => {
-  //   const { chosenName } = user;
+  const onSubmit = () => {
+    const { chosenName } = user;
 
-  //   const params = {
-  //     hangoutLink: link,
-  //     friendsList,
-  //     chosenName,
-  //     title,
-  //   };
-  //   Axios.post('/readr/clubInvite', { params })
-  //     .then(({ data }) => {
-  //       console.log(data, 'DATA SEND TO SERVER FOR CLUB INVITE');
-  //     });
-  // };
+    const params = {
+      hangoutLink: link,
+      friendsList,
+      chosenName,
+      title,
+    };
+    Axios.post('/readr/clubInvite', { params })
+      .then(({ data }) => {
+        console.log(data, 'DATA SEND TO SERVER FOR CLUB INVITE');
+      });
+  };
 
 
   // THIS ADDS EVENT TO YOUR CALENDAR
@@ -240,6 +240,7 @@ const BookClub = ({ user }) => {
               color="primary"
               onClick={() => {
                 addToCalendar();
+                onSubmit();
               }}
             >
               Preview REMINDER
