@@ -59,20 +59,13 @@ const ProfileView = ({ user, updateUser }) => {
   }, [userID]);
 
 
-  const renderview = () => {
-    if (view === 'user') {
-      return (
-        <div>
-          {bookData.map((book) => (
-            <UserView user={user} book={book} />
-          ))}
-        </div>
-      );
-    }
-    if (view === 'viewer') {
-      return <ViewerView />;
-    }
-  };
+  const renderview = () => (
+    <div>
+      {bookData.map((book) => (
+        <UserView user={user} book={book} />
+      ))}
+    </div>
+  );
 
   return (
     <Grid
@@ -83,19 +76,7 @@ const ProfileView = ({ user, updateUser }) => {
       className={classes.paper}
       style={{ width: '500px' }}
     >
-      <div>
-        <ButtonGroup>
-          <Button onClick={() => setView('user')}>
-          User view
-          </Button>
-          <Button onClick={() => setView('viewer')}>
-          Viewer View
-          </Button>
-        </ButtonGroup>
-        <div>
-          {renderview()}
-        </div>
-      </div>
+      {renderview()}
     </Grid>
   );
 };
