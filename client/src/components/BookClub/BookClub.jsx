@@ -5,6 +5,7 @@ import {
 import MuiAlert from '@material-ui/lab/Alert';
 import Axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
+import ClubList from '../Chatroom/ClubList';
 
 // import BookClubAttendee from './bookClubAttendee.jsx';
 
@@ -304,6 +305,9 @@ const BookClub = ({ user }) => {
               Preview REMINDER
             </Button>
           </Grid>
+        </Grid>
+        <Grid item container direction="row">
+          <ClubList />
         </Grid>
       </Grid>
       {/* MAIN HANGOUT LINK DIALOG */}
