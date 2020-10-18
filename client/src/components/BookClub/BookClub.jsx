@@ -337,7 +337,6 @@ const BookClub = ({ user }) => {
             onClick={() => {
               handleLinkClose();
               handleAlertClick();
-              setLink;
             }}
             color="primary"
             autoFocus
