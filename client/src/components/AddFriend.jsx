@@ -16,6 +16,13 @@ const AddFriend = ({ user }) => {
       });
   }, []);
 
+  const onSubmit = () => {
+    Axios.get('readr/getFriends', { user })
+      .then(({ data }) => {
+        setFriendsList(data);
+      });
+  };
+
   const handleSubmit = () => {
     Axios.post('/readr/addFriend', { user, friend })
       .then(({ data }) => {
@@ -41,7 +48,7 @@ const AddFriend = ({ user }) => {
         />
         <button
           type="submit"
-          onClick={() => handleSubmit()}
+          onClick={() => { handleSubmit(); onSubmit(); }}
         >
           submit
         </button>
@@ -57,6 +64,6 @@ const AddFriend = ({ user }) => {
       </div>
     </div>
   );
-}
+};
 
 export default AddFriend;
