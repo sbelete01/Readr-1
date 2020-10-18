@@ -43,7 +43,7 @@ const Buttons = () => {
         to="/addFriend"
         className={classes.button}
       >
-        TesterFriend
+        Add Friends!
       </Button>
       <Button
         size="large"
@@ -51,7 +51,7 @@ const Buttons = () => {
         to="/profile"
         className={classes.button}
       >
-        TesterViews
+        Profile
       </Button>
       <Button
         size="large"
@@ -59,15 +59,7 @@ const Buttons = () => {
         to="/bookclubinvite"
         className={classes.button}
       >
-        Testerclubinvite
-      </Button>
-      <Button
-        size="large"
-        component={Link}
-        to="/bookclubs"
-        className={classes.button}
-      >
-        TesterClubs
+        Book Club
       </Button>
       <Button
         size="large"

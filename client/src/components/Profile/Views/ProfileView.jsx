@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Button, ButtonGroup, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import UserView from './UserView.jsx';
-import ViewerView from './ViewerView.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     maxWidth: '100%',
     maxHeight: '100%',
+  },
+  search: {
+    padding: 10,
   },
 }));
 
@@ -76,7 +78,16 @@ const ProfileView = ({ user, updateUser }) => {
       className={classes.paper}
       style={{ width: '500px' }}
     >
-      {renderview()}
+      <Grid
+        item
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        className={classes.search}
+      >
+        {renderview()}
+      </Grid>
     </Grid>
   );
 };

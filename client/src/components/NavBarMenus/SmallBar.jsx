@@ -77,29 +77,23 @@ export default function SmallBar() {
           component={Link}
           to="/addFriend"
         >
-          TesterFriend
+          Add Friends!
         </MenuItem>
         <MenuItem
           onClick={handleClose}
           component={Link}
           to="/profile"
         >
-          TesterViews
+          Profile
         </MenuItem>
         <MenuItem
           onClick={handleClose}
           component={Link}
           to="/bookclubinvite"
         >
-          TesterClubinvite
+          Book Club
         </MenuItem>
-        <MenuItem
-          onClick={handleClose}
-          component={Link}
-          to="/bookclubs"
-        >
-          TesterClubs
-        </MenuItem>
+
         <MenuItem
           onClick={handleClose}
         >
