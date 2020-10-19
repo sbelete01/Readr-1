@@ -4,7 +4,9 @@ Find your perfect book match for free with Readr.
 <div>
 <img src = "https://user-images.githubusercontent.com/51866859/73042049-5b9dc600-3e25-11ea-899c-6f9006b7f8a7.png" width = "250" style = "padding: 10px">
 <img src = "https://user-images.githubusercontent.com/51866859/73042303-5d1bbe00-3e26-11ea-8688-bad4a677b04f.png" width = "250" style = "padding: 10px">
-<img src = "https://user-images.githubusercontent.com/51866859/73042069-6c4e3c00-3e25-11ea-956c-1eea4718489c.png" width = "250" style = "padding: 10px">
+<img src = "https://i.imgur.com/d2G6kXT.png" width = "250" style = "padding: 10px">
+<img src = "https://i.imgur.com/EjownYi.png" width = "250" style = "padding: 10px">
+<img src = "https://i.imgur.com/omLZQrK.png" width = "250" style = "padding: 10px">
 
 
 Readr develops an algorithm unique to each user. The more you use it, the better your book suggestions get!
