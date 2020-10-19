@@ -75,10 +75,10 @@ This app uses PostgreSQL
 ##### To include in environmental variables:
 A clientID and clientSecret from google for authentication
 To include with developer determined values
-* cookieKey
-* DATABASE
-* USER_NAME
-* USER_PASSWORD
-* HOST
-* DB_PORT
-* PORT
+clientID
+USER_NAME
+USER_PASSWORD
+DATABASE=readr
+PORT=3000
+clientSecret
+API_KEY <= from GOOGLE
