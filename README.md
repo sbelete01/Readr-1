@@ -11,6 +11,10 @@ Readr develops an algorithm unique to each user. The more you use it, the better
 
 #### The tech stack for this app: 
 
+> first thing to do here is 
+
+``` npm install ```
+
 - External API(s) - [Google Books](https://developers.google.com/books) (possibly Open Library for epub text)
 - Frontend Framework - React
 - Styling Library - Material UI
@@ -21,10 +25,14 @@ Readr develops an algorithm unique to each user. The more you use it, the better
 - Testing Framework - Mocha Chai
 - Project Management Tool - GitHub Projects
 
+> ***NOTE:*** Make sure to install the following separateley
+
+```npm i gapi ```
+
 #### User Experience
 
 * A user logs in with third-party authenication from Google.
-* The first time a user logs in, they will be prompted for their name, DOB and a short questionare. 
+* The first time a user logs in, they will be prompted for their desired username. 
 * After completing the questionare, they will see a page with a single book suggestion and short description of the book.
 * The users will see two large button links below the book suggestion
     - **"Interested", "Not Interested".**
@@ -41,6 +49,25 @@ Readr develops an algorithm unique to each user. The more you use it, the better
       we are using [ReactReader powerd by ePub.js](https://github.com/gerhardsletten/react-reader)
     - If not avaliable, they will be directed to an outside link to a public domain copy of the book. 
     - If in app, the user should be able to exit the ebook and be back on the suggestion page. 
+
+#### Reading List
+
+* #### When the user clicks on reading list, user will be shown the books the user has interest in
+    - A few buttons will appear: each are self explanatory
+    - The finished button will add to the users profile. So others can see what books they are reading
+   
+#### Add Friends!
+
+* #### When the user clicks on add friends, he will see a search bar to be able to search for friends
+
+#### Book Club
+
+* #### The user will be able to send invites to book clubs to his following friends
+    - able to add to google calendar
+    - able to specify friends
+    - start and end times
+    - custom hangouts link
+    
 
 #### User Book Lists
  * "To-Read"
